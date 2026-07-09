@@ -143,6 +143,40 @@
             </div>
         @endif
 
+        <!-- Legenda de Cores e Indicadores -->
+        @if(count($finances) > 0)
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900/40 border border-slate-800/80 rounded-xl p-3.5 text-xs select-none">
+                <div class="flex items-center space-x-2 text-slate-400">
+                    <svg class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="font-semibold text-slate-300">Legenda de Cores & Indicadores:</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <div class="flex items-center space-x-1.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                        <span class="text-slate-300">Receitas / Entradas</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-rose-500"></span>
+                        <span class="text-slate-300">Despesas / Saídas</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                        <span class="text-slate-300">Total Mãe (Auxílios)</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-indigo-500"></span>
+                        <span class="text-slate-300">Saldo Livre (Sobrou)</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5 opacity-60">
+                        <span class="h-2.5 w-2.5 rounded-full bg-slate-500 line-through"></span>
+                        <span class="text-slate-400 line-through">Valores Ignorados</span>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- Spreadsheet Horizontal Layout -->
         <div class="bg-slate-900/50 border border-slate-850 rounded-2xl p-6 shadow-xl relative overflow-x-auto min-h-[500px]">
             @if(count($finances) === 0)
@@ -195,11 +229,11 @@
                                         <span class="font-semibold text-emerald-400">R$ {{ number_format($finance->salario_teorico, 2, ',', '.') }}</span>
                                     </div>
                                     @if($finance->ignorar_bolsa || $finance->ignorar_alimentacao || $finance->ignorar_transporte)
-                                        <div class="flex flex-wrap gap-1 mt-1 text-[9px] text-rose-400 font-semibold uppercase tracking-wider">
-                                            <span>Ignorou:</span>
-                                            @if($finance->ignorar_bolsa) <span class="bg-rose-500/10 px-1 rounded">Bolsa</span> @endif
-                                            @if($finance->ignorar_alimentacao) <span class="bg-rose-500/10 px-1 rounded">Alimentação</span> @endif
-                                            @if($finance->ignorar_transporte) <span class="bg-rose-500/10 px-1 rounded">Transporte</span> @endif
+                                        <div class="flex flex-wrap items-center mt-1 text-[10px] text-slate-500 font-medium">
+                                            <span class="mr-1.5">Desconsiderou:</span>
+                                            @if($finance->ignorar_bolsa) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Bolsa</span> @endif
+                                            @if($finance->ignorar_alimentacao) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Alimentação</span> @endif
+                                            @if($finance->ignorar_transporte) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Transporte</span> @endif
                                         </div>
                                     @endif
                                 </div>
@@ -217,10 +251,10 @@
                                         <span class="font-semibold text-amber-500">R$ {{ number_format($finance->total_mae, 2, ',', '.') }}</span>
                                     </div>
                                     @if($finance->ignorar_dinheiro_mae || $finance->ignorar_conducao)
-                                        <div class="flex flex-wrap gap-1 mt-1 text-[9px] text-rose-400 font-semibold uppercase tracking-wider">
-                                            <span>Ignorou:</span>
-                                            @if($finance->ignorar_dinheiro_mae) <span class="bg-rose-500/10 px-1 rounded">Fixo</span> @endif
-                                            @if($finance->ignorar_conducao) <span class="bg-rose-500/10 px-1 rounded">Condução</span> @endif
+                                        <div class="flex flex-wrap items-center mt-1 text-[10px] text-slate-500 font-medium">
+                                            <span class="mr-1.5">Desconsiderou:</span>
+                                            @if($finance->ignorar_dinheiro_mae) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Fixo</span> @endif
+                                            @if($finance->ignorar_conducao) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Condução</span> @endif
                                         </div>
                                     @endif
                                 </div>
@@ -463,23 +497,23 @@
                         <!-- Coluna Customizada Extra -->
                         <div class="space-y-3">
                             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Adicionar Campo/Valor Extra no Total</h3>
-                            <div class="grid grid-cols-3 gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                            <div class="grid grid-cols-3 gap-4 bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
                                 <div>
-                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Nome do Campo</label>
-                                    <input type="text" wire:model.live="extra_nome" placeholder="Ex: Bônus" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Nome do Campo</label>
+                                    <input type="text" wire:model.live="extra_nome" placeholder="Ex: Bônus" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
                                     @error('extra_nome') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Tipo</label>
-                                    <select wire:model.live="extra_tipo" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Tipo</label>
+                                    <select wire:model.live="extra_tipo" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
                                         <option value="saida">Saída (Despesa)</option>
                                         <option value="entrada">Entrada (Receita)</option>
                                     </select>
                                     @error('extra_tipo') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Valor (R$)</label>
-                                    <input type="number" step="0.01" wire:model.live="extra_valor" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Valor (R$)</label>
+                                    <input type="number" step="0.01" wire:model.live="extra_valor" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
                                     @error('extra_valor') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                                 </div>
                             </div>
