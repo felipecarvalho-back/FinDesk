@@ -95,7 +95,8 @@
         <!-- Main Workspace Content -->
         <div class="flex-1 p-6 space-y-6 max-w-7xl mx-auto w-full">
             @if($currentScreen === 'dashboard')
-                <!-- TELA 1: PAINEL GERAL (DASHBOARD COM GRÁFICOS) -->
+                <div wire:key="screen-dashboard" class="space-y-6">
+                    <!-- TELA 1: PAINEL GERAL (DASHBOARD COM GRÁFICOS) -->
                 @if(count($finances) > 0)
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         @php
@@ -306,9 +307,11 @@
                         </button>
                     </div>
                 @endif
+                </div>
 
             @elseif($currentScreen === 'meses')
-                <!-- TELA 2: LISTAGEM DE MESES SIMPLIFICADA -->
+                <div wire:key="screen-meses" class="space-y-6">
+                    <!-- TELA 2: LISTAGEM DE MESES SIMPLIFICADA -->
                 <div class="flex justify-between items-center mb-4">
                     <div>
                         <h2 class="text-lg font-bold text-slate-200">Minhas Finanças Mensais</h2>
@@ -339,7 +342,7 @@
                         <!-- Simplified Month Columns Grid -->
                         <div class="flex space-x-6 pb-4">
                             @foreach($finances as $finance)
-                                <div class="flex-none w-72 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg transition duration-200 hover:border-slate-700">
+                                <div wire:key="month-card-{{ $finance->id }}" class="flex-none w-72 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg transition duration-200 hover:border-slate-700">
                                     <!-- Card Header -->
                                     <div class="bg-slate-950 border-b border-slate-800 px-4 py-3 flex items-center justify-between">
                                         <div>
@@ -383,9 +386,11 @@
                         </div>
                     @endif
                 </div>
+                </div>
 
             @elseif($currentScreen === 'detalhes' && $editingId)
-                <!-- TELA 3: DETALHES COMPLETOS & EDIÇÃO DO MÊS SELECIONADO -->
+                <div wire:key="screen-detalhes" class="space-y-6">
+                    <!-- TELA 3: DETALHES COMPLETOS & EDIÇÃO DO MÊS SELECIONADO -->
                 @php
                     $activeFinance = collect($finances)->firstWhere('id', $editingId);
                 @endphp
@@ -719,6 +724,7 @@
                         </div>
                     </div>
                 @endif
+                </div>
             @endif
         </div>
        <!-- Form Modal (Create or Edit Monthly Finance) -->
