@@ -76,6 +76,8 @@ class FinanceDashboard extends Component
 
     public bool $ignorar_fatura = false;
 
+    public string $formTab = 'basico';
+
     // Automatic calculation preview in modal
     public float $previewSalarioTeorico = 0.0;
 
@@ -180,6 +182,7 @@ class FinanceDashboard extends Component
     {
         $this->resetErrorBag();
         $this->editingId = null;
+        $this->formTab = 'basico';
 
         // Suggest last month's year/month + 1
         $latest = MonthlyFinance::orderBy('year', 'desc')->orderBy('month', 'desc')->first();
@@ -231,6 +234,7 @@ class FinanceDashboard extends Component
     {
         $this->resetErrorBag();
         $finance = MonthlyFinance::findOrFail($id);
+        $this->formTab = 'basico';
 
         $this->editingId = $finance->id;
         $this->year = $finance->year;

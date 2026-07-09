@@ -59,6 +59,7 @@ test('livewire dashboard component can load, calculate, and save data', function
         ->set('isAuthenticated', true)
         ->assertSet('bolsa_auxilio', 937.59)
         ->call('openCreateModal')
+        ->assertSet('formTab', 'basico')
         ->set('year', 2026)
         ->set('month', 6)
         ->set('dias_trabalhados', 19)

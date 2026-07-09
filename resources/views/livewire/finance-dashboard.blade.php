@@ -290,9 +290,7 @@
         </div>
     </div>
 
-    <!-- Modals Layer -->
-
-    <!-- Form Modal (Create or Edit Monthly Finance) -->
+       <!-- Form Modal (Create or Edit Monthly Finance) -->
     @if($showFormModal)
         <div class="fixed inset-0 z-45 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl transition-all duration-300">
@@ -307,170 +305,186 @@
                     </button>
                 </div>
 
+                <!-- Tabs / Etapas para Reorganização UI/UX -->
+                <div class="flex border-b border-slate-800 bg-slate-950/50 text-sm select-none">
+                    <button type="button" wire:click="$set('formTab', 'basico')" class="flex-1 py-3 text-center font-semibold transition border-b-2 {{ $formTab === 'basico' ? 'text-indigo-400 border-indigo-500 bg-slate-900/50' : 'text-slate-400 border-transparent hover:text-slate-200' }}">
+                        1. Valores Básicos
+                    </button>
+                    <button type="button" wire:click="$set('formTab', 'avancado')" class="flex-1 py-3 text-center font-semibold transition border-b-2 {{ $formTab === 'avancado' ? 'text-indigo-400 border-indigo-500 bg-slate-900/50' : 'text-slate-400 border-transparent hover:text-slate-200' }}">
+                        2. Personalizar Cálculo (Ignorar & Extras)
+                    </button>
+                </div>
+
                 <form wire:submit.prevent="saveFinance" class="p-6 space-y-4">
-                    <!-- Period Selection -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Ano de Trabalho</label>
-                            <input type="number" wire:model.blur="year" min="2000" max="2100" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            @error('year') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Mês de Trabalho</label>
-                            <select wire:model.blur="month" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                                <option value="1">Janeiro</option>
-                                <option value="2">Fevereiro</option>
-                                <option value="3">Março</option>
-                                <option value="4">Abril</option>
-                                <option value="5">Maio</option>
-                                <option value="6">Junho</option>
-                                <option value="7">Julho</option>
-                                <option value="8">Agosto</option>
-                                <option value="9">Setembro</option>
-                                <option value="10">Outubro</option>
-                                <option value="11">Novembro</option>
-                                <option value="12">Dezembro</option>
-                            </select>
-                            @error('month') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-
-                    <!-- Work & Commute details -->
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Dias Trab.</label>
-                            <input type="number" wire:model.live="dias_trabalhados" min="0" max="31" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            @error('dias_trabalhados') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Dias Condução</label>
-                            <input type="number" wire:model.live="dias_conducao" min="0" max="31" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            @error('dias_conducao') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Condução Dia</label>
-                            <input type="number" step="0.01" wire:model.live="conducao_dia" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            @error('conducao_dia') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-
-                    <!-- Financial Values -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Recebido real</label>
-                            <div class="relative">
-                                <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
-                                <input type="number" step="0.01" wire:model.live="recebido" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            </div>
-                            <span class="text-[10px] text-slate-500 mt-1 block">Sugerido: R$ {{ number_format($previewSalarioTeorico, 2, ',', '.') }}</span>
-                            @error('recebido') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Fatura / Consumo</label>
-                            <div class="relative">
-                                <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
-                                <input type="number" step="0.01" wire:model.live="fatura" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            </div>
-                            @error('fatura') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Caxinha</label>
-                            <div class="relative">
-                                <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
-                                <input type="number" step="0.01" wire:model.live="caxinha" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            </div>
-                            @error('caxinha') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Investimento</label>
-                            <div class="relative">
-                                <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
-                                <input type="number" step="0.01" wire:model.live="investimento" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
-                            </div>
-                            @error('investimento') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-
-                    <!-- Parâmetros Opcionais (Ignorar) -->
-                    <div class="border-t border-slate-800/80 pt-4 space-y-3">
-                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Desconsiderar no Cálculo (Opcional)</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
-                            <!-- Salário components -->
-                            <div class="space-y-2">
-                                <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">No Salário</span>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_bolsa" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Bolsa</span>
-                                </label>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_alimentacao" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Alim.</span>
-                                </label>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_transporte" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Transp.</span>
-                                </label>
-                            </div>
-                            
-                            <!-- Mãe components -->
-                            <div class="space-y-2 border-l border-slate-850 pl-3">
-                                <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">Na Mãe</span>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_dinheiro_mae" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar M. Fixo</span>
-                                </label>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_conducao" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Cond.</span>
-                                </label>
-                            </div>
-
-                            <!-- Balance columns -->
-                            <div class="space-y-2 border-l border-slate-850 pl-3 col-span-2 md:col-span-1">
-                                <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">Nas Despesas</span>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_caxinha" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Caxinha</span>
-                                </label>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_investimento" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Invest.</span>
-                                </label>
-                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
-                                    <input type="checkbox" wire:model.live="ignorar_fatura" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
-                                    <span>Ignorar Fatura</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Coluna Customizada Extra -->
-                    <div class="border-t border-slate-800/80 pt-4 space-y-3">
-                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Adicionar Campo/Valor Extra no Total</h3>
-                        <div class="grid grid-cols-3 gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                    @if($formTab === 'basico')
+                        <!-- TELA 1: VALORES BÁSICOS -->
+                        
+                        <!-- Period Selection -->
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Nome do Campo</label>
-                                <input type="text" wire:model.live="extra_nome" placeholder="Ex: Bônus" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
-                                @error('extra_nome') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Ano de Trabalho</label>
+                                <input type="number" wire:model.blur="year" min="2000" max="2100" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                @error('year') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Tipo</label>
-                                <select wire:model.live="extra_tipo" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
-                                    <option value="saida">Saída (Despesa)</option>
-                                    <option value="entrada">Entrada (Receita)</option>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Mês de Trabalho</label>
+                                <select wire:model.blur="month" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                    <option value="1">Janeiro</option>
+                                    <option value="2">Fevereiro</option>
+                                    <option value="3">Março</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Maio</option>
+                                    <option value="6">Junho</option>
+                                    <option value="7">Julho</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setembro</option>
+                                    <option value="10">Outubro</option>
+                                    <option value="11">Novembro</option>
+                                    <option value="12">Dezembro</option>
                                 </select>
-                                @error('extra_tipo') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Valor (R$)</label>
-                                <input type="number" step="0.01" wire:model.live="extra_valor" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
-                                @error('extra_valor') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                                @error('month') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                    </div>
+
+                        <!-- Work & Commute details -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Dias Trab.</label>
+                                <input type="number" wire:model.live="dias_trabalhados" min="0" max="31" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                @error('dias_trabalhados') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Dias Condução</label>
+                                <input type="number" wire:model.live="dias_conducao" min="0" max="31" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                @error('dias_conducao') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Condução Dia</label>
+                                <input type="number" step="0.01" wire:model.live="conducao_dia" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                @error('conducao_dia') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <!-- Financial Values -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Recebido real</label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
+                                    <input type="number" step="0.01" wire:model.live="recebido" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                </div>
+                                <span class="text-[10px] text-slate-500 mt-1 block">Sugerido: R$ {{ number_format($previewSalarioTeorico, 2, ',', '.') }}</span>
+                                @error('recebido') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Fatura / Consumo</label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
+                                    <input type="number" step="0.01" wire:model.live="fatura" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                </div>
+                                @error('fatura') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Caxinha</label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
+                                    <input type="number" step="0.01" wire:model.live="caxinha" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                </div>
+                                @error('caxinha') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Investimento</label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-2 text-slate-500 text-sm">R$</span>
+                                    <input type="number" step="0.01" wire:model.live="investimento" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
+                                </div>
+                                @error('investimento') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    @else
+                        <!-- TELA 2: PARÂMETROS OPCIONAIS E EXTRAS -->
+
+                        <!-- Parâmetros Opcionais (Ignorar) -->
+                        <div class="space-y-3">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Desconsiderar no Cálculo (Opcional)</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                                <!-- Salário components -->
+                                <div class="space-y-2">
+                                    <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">No Salário</span>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_bolsa" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Bolsa</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_alimentacao" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Alim.</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_transporte" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Transp.</span>
+                                    </label>
+                                </div>
+                                
+                                <!-- Mãe components -->
+                                <div class="space-y-2 border-l border-slate-850 pl-3">
+                                    <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">Na Mãe</span>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_dinheiro_mae" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar M. Fixo</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_conducao" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Cond.</span>
+                                    </label>
+                                </div>
+
+                                <!-- Balance columns -->
+                                <div class="space-y-2 border-l border-slate-850 pl-3 col-span-2 md:col-span-1">
+                                    <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">Nas Despesas</span>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_caxinha" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Caxinha</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_investimento" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Invest.</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                        <input type="checkbox" wire:model.live="ignorar_fatura" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                        <span>Ignorar Fatura</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coluna Customizada Extra -->
+                        <div class="space-y-3">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Adicionar Campo/Valor Extra no Total</h3>
+                            <div class="grid grid-cols-3 gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Nome do Campo</label>
+                                    <input type="text" wire:model.live="extra_nome" placeholder="Ex: Bônus" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                    @error('extra_nome') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Tipo</label>
+                                    <select wire:model.live="extra_tipo" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                        <option value="saida">Saída (Despesa)</option>
+                                        <option value="entrada">Entrada (Receita)</option>
+                                    </select>
+                                    @error('extra_tipo') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Valor (R$)</label>
+                                    <input type="number" step="0.01" wire:model.live="extra_valor" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                    @error('extra_valor') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Reactive Calculation Preview Panel -->
                     <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-4 mt-2 space-y-2.5">
@@ -491,13 +505,33 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-end space-x-3 pt-4 border-t border-slate-850">
-                        <button type="button" wire:click="$set('showFormModal', false)" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm transition">
-                            Cancelar
-                        </button>
-                        <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10">
-                            {{ $editingId ? 'Salvar Alterações' : 'Adicionar Mês' }}
-                        </button>
+                    <!-- Footer Action Buttons -->
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-850">
+                        @if($formTab === 'basico')
+                            <button type="button" wire:click="$set('formTab', 'avancado')" class="flex items-center space-x-1.5 px-4 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold transition text-indigo-400 hover:text-indigo-300">
+                                <span>Personalizar Cálculo ➔</span>
+                            </button>
+                            <div class="flex items-center space-x-3">
+                                <button type="button" wire:click="$set('showFormModal', false)" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm transition">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10">
+                                    {{ $editingId ? 'Salvar Alterações' : 'Adicionar Mês' }}
+                                </button>
+                            </div>
+                        @else
+                            <button type="button" wire:click="$set('formTab', 'basico')" class="flex items-center space-x-1.5 px-4 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold transition text-slate-300 hover:text-slate-100">
+                                <span>⬅ Voltar</span>
+                            </button>
+                            <div class="flex items-center space-x-3">
+                                <button type="button" wire:click="$set('showFormModal', false)" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm transition">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10">
+                                    {{ $editingId ? 'Salvar Alterações' : 'Adicionar Mês' }}
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </form>
             </div>
