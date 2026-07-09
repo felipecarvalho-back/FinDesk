@@ -83,6 +83,41 @@ test('livewire dashboard component can load, calculate, and save data', function
     expect($finance->saldo_final)->toBe(456.40);
 });
 
+test('livewire dashboard component can edit and update existing data', function () {
+    // Seed test settings explicitly
+    Setting::setValue('bolsa_auxilio', 937.59);
+    Setting::setValue('alimentacao_dia', 12.00);
+    Setting::setValue('transporte_dia', 19.85);
+    Setting::setValue('dinheiro_mae', 150.00);
+
+    // Create record
+    $finance = MonthlyFinance::create([
+        'year' => 2026,
+        'month' => 6,
+        'dias_trabalhados' => 19,
+        'conducao_dia' => 12.10,
+        'dias_conducao' => 16,
+        'recebido' => 1600.00,
+        'caxinha' => 300.00,
+        'investimento' => 200.00,
+        'fatura' => 300.00,
+        'bolsa_auxilio_snapshot' => 937.59,
+        'alimentacao_dia_snapshot' => 12.00,
+        'transporte_dia_snapshot' => 19.85,
+        'dinheiro_mae_snapshot' => 150.00,
+    ]);
+
+    Livewire::test(FinanceDashboard::class)
+        ->set('isAuthenticated', true)
+        ->call('openEditModal', $finance->id)
+        ->set('recebido', 1700.00)
+        ->call('saveFinance')
+        ->assertHasNoErrors();
+
+    $finance->refresh();
+    expect($finance->recebido)->toBe(1700.00);
+});
+
 test('user can log in with correct password', function () {
     Livewire::test(FinanceDashboard::class)
         ->assertSet('isAuthenticated', false)
