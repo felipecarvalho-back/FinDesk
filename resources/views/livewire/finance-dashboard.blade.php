@@ -189,9 +189,19 @@
                             <!-- Card Rows (Spreadsheet Layout) -->
                             <div class="divide-y divide-slate-800/60 text-sm">
                                 <!-- Salario Teórico -->
-                                <div class="px-4 py-2.5 flex justify-between bg-slate-900/30">
-                                    <span class="text-slate-400 font-medium">Salário na Teoria:</span>
-                                    <span class="font-semibold text-emerald-400">R$ {{ number_format($finance->salario_teorico, 2, ',', '.') }}</span>
+                                <div class="px-4 py-2.5 flex flex-col justify-center bg-slate-900/30">
+                                    <div class="flex justify-between w-full">
+                                        <span class="text-slate-400 font-medium">Salário na Teoria:</span>
+                                        <span class="font-semibold text-emerald-400">R$ {{ number_format($finance->salario_teorico, 2, ',', '.') }}</span>
+                                    </div>
+                                    @if($finance->ignorar_bolsa || $finance->ignorar_alimentacao || $finance->ignorar_transporte)
+                                        <div class="flex flex-wrap gap-1 mt-1 text-[9px] text-rose-400 font-semibold uppercase tracking-wider">
+                                            <span>Ignorou:</span>
+                                            @if($finance->ignorar_bolsa) <span class="bg-rose-500/10 px-1 rounded">Bolsa</span> @endif
+                                            @if($finance->ignorar_alimentacao) <span class="bg-rose-500/10 px-1 rounded">Alimentação</span> @endif
+                                            @if($finance->ignorar_transporte) <span class="bg-rose-500/10 px-1 rounded">Transporte</span> @endif
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Recebido -->
@@ -201,28 +211,53 @@
                                 </div>
 
                                 <!-- Dinheiro Mãe -->
-                                <div class="px-4 py-2.5 flex justify-between bg-slate-900/20">
-                                    <span class="text-slate-400">Mãe:</span>
-                                    <span class="font-semibold text-amber-500">R$ {{ number_format($finance->total_mae, 2, ',', '.') }}</span>
+                                <div class="px-4 py-2.5 flex flex-col justify-center bg-slate-900/20">
+                                    <div class="flex justify-between w-full">
+                                        <span class="text-slate-400">Mãe:</span>
+                                        <span class="font-semibold text-amber-500">R$ {{ number_format($finance->total_mae, 2, ',', '.') }}</span>
+                                    </div>
+                                    @if($finance->ignorar_dinheiro_mae || $finance->ignorar_conducao)
+                                        <div class="flex flex-wrap gap-1 mt-1 text-[9px] text-rose-400 font-semibold uppercase tracking-wider">
+                                            <span>Ignorou:</span>
+                                            @if($finance->ignorar_dinheiro_mae) <span class="bg-rose-500/10 px-1 rounded">Fixo</span> @endif
+                                            @if($finance->ignorar_conducao) <span class="bg-rose-500/10 px-1 rounded">Condução</span> @endif
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Caxinha -->
-                                <div class="px-4 py-2.5 flex justify-between">
-                                    <span class="text-slate-400">Caxinha:</span>
-                                    <span class="font-semibold text-violet-400">R$ {{ number_format($finance->caxinha, 2, ',', '.') }}</span>
+                                <div class="px-4 py-2.5 flex justify-between items-center {{ $finance->ignorar_caxinha ? 'opacity-40 bg-slate-900/10' : '' }}">
+                                    <span class="text-slate-400 {{ $finance->ignorar_caxinha ? 'line-through' : '' }}">Caxinha:</span>
+                                    <span class="font-semibold {{ $finance->ignorar_caxinha ? 'line-through text-slate-500' : 'text-violet-400' }}">
+                                        R$ {{ number_format($finance->caxinha, 2, ',', '.') }}
+                                    </span>
                                 </div>
 
                                 <!-- Investimento -->
-                                <div class="px-4 py-2.5 flex justify-between bg-slate-900/20">
-                                    <span class="text-slate-400">Investimento:</span>
-                                    <span class="font-semibold text-violet-400">R$ {{ number_format($finance->investimento, 2, ',', '.') }}</span>
+                                <div class="px-4 py-2.5 flex justify-between bg-slate-900/20 items-center {{ $finance->ignorar_investimento ? 'opacity-40 bg-slate-900/10' : '' }}">
+                                    <span class="text-slate-400 {{ $finance->ignorar_investimento ? 'line-through' : '' }}">Investimento:</span>
+                                    <span class="font-semibold {{ $finance->ignorar_investimento ? 'line-through text-slate-500' : 'text-violet-400' }}">
+                                        R$ {{ number_format($finance->investimento, 2, ',', '.') }}
+                                    </span>
                                 </div>
 
                                 <!-- Fatura / Consumo -->
-                                <div class="px-4 py-2.5 flex justify-between">
-                                    <span class="text-slate-400">Fatura:</span>
-                                    <span class="font-semibold text-rose-400">R$ {{ number_format($finance->fatura, 2, ',', '.') }}</span>
+                                <div class="px-4 py-2.5 flex justify-between items-center {{ $finance->ignorar_fatura ? 'opacity-40 bg-slate-900/10' : '' }}">
+                                    <span class="text-slate-400 {{ $finance->ignorar_fatura ? 'line-through' : '' }}">Fatura:</span>
+                                    <span class="font-semibold {{ $finance->ignorar_fatura ? 'line-through text-slate-500' : 'text-rose-400' }}">
+                                        R$ {{ number_format($finance->fatura, 2, ',', '.') }}
+                                    </span>
                                 </div>
+
+                                <!-- Coluna Extra -->
+                                @if($finance->extra_valor > 0)
+                                    <div class="px-4 py-2.5 flex justify-between bg-slate-900/10 items-center">
+                                        <span class="text-slate-400 font-medium">{{ $finance->extra_nome ?: 'Extra' }}:</span>
+                                        <span class="font-semibold {{ $finance->extra_tipo === 'entrada' ? 'text-emerald-400' : 'text-rose-400' }}">
+                                            {{ $finance->extra_tipo === 'entrada' ? '+' : '-' }} R$ {{ number_format($finance->extra_valor, 2, ',', '.') }}
+                                        </span>
+                                    </div>
+                                @endif
 
                                 <!-- Dias Trabalhados -->
                                 <div class="px-4 py-2.5 flex justify-between bg-slate-900/20">
@@ -356,6 +391,84 @@
                                 <input type="number" step="0.01" wire:model.live="investimento" class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3.5 py-2 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" required>
                             </div>
                             @error('investimento') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <!-- Parâmetros Opcionais (Ignorar) -->
+                    <div class="border-t border-slate-800/80 pt-4 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Desconsiderar no Cálculo (Opcional)</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                            <!-- Salário components -->
+                            <div class="space-y-2">
+                                <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">No Salário</span>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_bolsa" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Bolsa</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_alimentacao" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Alim.</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_transporte" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Transp.</span>
+                                </label>
+                            </div>
+                            
+                            <!-- Mãe components -->
+                            <div class="space-y-2 border-l border-slate-850 pl-3">
+                                <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">Na Mãe</span>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_dinheiro_mae" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar M. Fixo</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_conducao" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Cond.</span>
+                                </label>
+                            </div>
+
+                            <!-- Balance columns -->
+                            <div class="space-y-2 border-l border-slate-850 pl-3 col-span-2 md:col-span-1">
+                                <span class="text-slate-500 font-semibold uppercase tracking-wider text-[9px] block">Nas Despesas</span>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_caxinha" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Caxinha</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_investimento" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Invest.</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-slate-300 cursor-pointer hover:text-slate-100">
+                                    <input type="checkbox" wire:model.live="ignorar_fatura" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0 focus:ring-offset-0">
+                                    <span>Ignorar Fatura</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coluna Customizada Extra -->
+                    <div class="border-t border-slate-800/80 pt-4 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Adicionar Campo/Valor Extra no Total</h3>
+                        <div class="grid grid-cols-3 gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/50">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Nome do Campo</label>
+                                <input type="text" wire:model.live="extra_nome" placeholder="Ex: Bônus" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                @error('extra_nome') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Tipo</label>
+                                <select wire:model.live="extra_tipo" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                    <option value="saida">Saída (Despesa)</option>
+                                    <option value="entrada">Entrada (Receita)</option>
+                                </select>
+                                @error('extra_tipo') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Valor (R$)</label>
+                                <input type="number" step="0.01" wire:model.live="extra_valor" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 text-slate-100">
+                                @error('extra_valor') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
                         </div>
                     </div>
 

@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Setting;
-use App\Models\MonthlyFinance;
 use App\Livewire\FinanceDashboard;
-use Livewire\Livewire;
+use App\Models\MonthlyFinance;
+use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
@@ -98,4 +98,97 @@ test('user cannot log in with incorrect password', function () {
         ->call('login')
         ->assertSet('isAuthenticated', false)
         ->assertHasErrors(['passwordInput']);
+});
+
+test('monthly finance calculations with ignored global variables and columns', function () {
+    // Seed settings
+    Setting::setValue('bolsa_auxilio', 1000.00);
+    Setting::setValue('alimentacao_dia', 20.00);
+    Setting::setValue('transporte_dia', 15.00);
+    Setting::setValue('dinheiro_mae', 100.00);
+
+    // Create record with ignored settings (ignore bolsa and caxinha)
+    $finance = MonthlyFinance::create([
+        'year' => 2026,
+        'month' => 6,
+        'dias_trabalhados' => 20,
+        'conducao_dia' => 10.00,
+        'dias_conducao' => 20,
+        'recebido' => 1500.00,
+        'caxinha' => 300.00,
+        'investimento' => 200.00,
+        'fatura' => 300.00,
+        'bolsa_auxilio_snapshot' => (float) Setting::getValue('bolsa_auxilio'),
+        'alimentacao_dia_snapshot' => (float) Setting::getValue('alimentacao_dia'),
+        'transporte_dia_snapshot' => (float) Setting::getValue('transporte_dia'),
+        'dinheiro_mae_snapshot' => (float) Setting::getValue('dinheiro_mae'),
+        // Toggles
+        'ignorar_bolsa' => true,
+        'ignorar_caxinha' => true,
+    ]);
+
+    // salario_teorico = (bolsa ignored) 0 + (20 * 20) + (15 * 20) = 400 + 300 = 700.00
+    expect($finance->salario_teorico)->toBe(700.00);
+    // total_mae = 100 + (10 * 20) = 300.00
+    expect($finance->total_mae)->toBe(300.00);
+    // saldo_final = recebido - total_mae - (caxinha ignored) 0 - investimento - fatura = 1500 - 300 - 0 - 200 - 300 = 700.00
+    expect($finance->saldo_final)->toBe(700.00);
+});
+
+test('monthly finance calculations with extra income/expense columns', function () {
+    // Seed settings
+    Setting::setValue('bolsa_auxilio', 1000.00);
+    Setting::setValue('alimentacao_dia', 20.00);
+    Setting::setValue('transporte_dia', 15.00);
+    Setting::setValue('dinheiro_mae', 100.00);
+
+    // Create record with extra income
+    $financeIncome = MonthlyFinance::create([
+        'year' => 2026,
+        'month' => 6,
+        'dias_trabalhados' => 20,
+        'conducao_dia' => 10.00,
+        'dias_conducao' => 20,
+        'recebido' => 1500.00,
+        'caxinha' => 300.00,
+        'investimento' => 200.00,
+        'fatura' => 300.00,
+        'bolsa_auxilio_snapshot' => (float) Setting::getValue('bolsa_auxilio'),
+        'alimentacao_dia_snapshot' => (float) Setting::getValue('alimentacao_dia'),
+        'transporte_dia_snapshot' => (float) Setting::getValue('transporte_dia'),
+        'dinheiro_mae_snapshot' => (float) Setting::getValue('dinheiro_mae'),
+        // Extra income
+        'extra_nome' => 'Bônus',
+        'extra_valor' => 250.00,
+        'extra_tipo' => 'entrada',
+    ]);
+
+    // total_mae = 100 + 200 = 300
+    // saldo_final = recebido (1500) - total_mae (300) - caxinha (300) - investimento (200) - fatura (300) + extra (250) = 400 + 250 = 650.00
+    expect($financeIncome->saldo_final)->toBe(650.00);
+
+    // Create record with extra expense
+    $financeExpense = MonthlyFinance::create([
+        'year' => 2026,
+        'month' => 7,
+        'dias_trabalhados' => 20,
+        'conducao_dia' => 10.00,
+        'dias_conducao' => 20,
+        'recebido' => 1500.00,
+        'caxinha' => 300.00,
+        'investimento' => 200.00,
+        'fatura' => 300.00,
+        'bolsa_auxilio_snapshot' => (float) Setting::getValue('bolsa_auxilio'),
+        'alimentacao_dia_snapshot' => (float) Setting::getValue('alimentacao_dia'),
+        'transporte_dia_snapshot' => (float) Setting::getValue('transporte_dia'),
+        'dinheiro_mae_snapshot' => (float) Setting::getValue('dinheiro_mae'),
+        // Extra expense
+        'extra_nome' => 'Academia',
+        'extra_valor' => 120.00,
+        'extra_tipo' => 'saida',
+    ]);
+
+    // total_mae = 100 + 200 = 300
+    // saldo_final = 1500 - 300 - 300 - 200 - 300 - 120 = 400 - 120 = 280.00
+    expect($financeExpense->saldo_final)->toBe(280.00);
 });
