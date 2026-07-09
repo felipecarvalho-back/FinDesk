@@ -36,9 +36,9 @@ class FinanceDashboard extends Component
     public float $conducao_dia = 0.0;
     public int $dias_conducao = 0;
     public float $recebido = 0.0;
-    public float $caxinha = 300.0;
-    public float $investimento = 200.0;
-    public float $fatura = 300.0;
+    public float $caxinha = 0.0;
+    public float $investimento = 0.0;
+    public float $fatura = 0.0;
 
     // Automatic calculation preview in modal
     public float $previewSalarioTeorico = 0.0;
