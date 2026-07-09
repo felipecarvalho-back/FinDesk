@@ -27,7 +27,8 @@
             </div>
         </div>
     @else
-        <!-- Top Header Navigation -->
+        <div wire:key="authenticated-app-wrapper" class="flex-1 flex flex-col min-h-0 w-full relative">
+            <!-- Top Header Navigation -->
         <header class="sticky top-0 z-10 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-6 py-4 flex items-center justify-between">
         <div class="flex items-center space-x-3">
             <div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -525,7 +526,8 @@
 
                                     <form wire:submit.prevent="saveFinance" class="p-6 space-y-6">
                                         @if($formTab === 'basico')
-                                            <!-- Period Selection -->
+                                            <div wire:key="details-tab-basico" class="space-y-6">
+                                                <!-- Period Selection -->
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Ano de Trabalho</label>
@@ -610,8 +612,10 @@
                                                     @error('investimento') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                                                 </div>
                                             </div>
+                                            </div>
                                         @else
-                                            <!-- TELA 2: PARÂMETROS OPCIONAIS E EXTRAS -->
+                                            <div wire:key="details-tab-avancado" class="space-y-6">
+                                                <!-- TELA 2: PARÂMETROS OPCIONAIS E EXTRAS -->
 
                                             <!-- Parâmetros Opcionais (Ignorar) -->
                                             <div class="space-y-3">
@@ -690,6 +694,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
                                         @endif
 
                                         <!-- Reactive Calculation Preview Panel -->
@@ -754,7 +759,8 @@
 
                 <form wire:submit.prevent="saveFinance" class="p-6 space-y-4">
                     @if($formTab === 'basico')
-                        <!-- TELA 1: VALORES BÁSICOS -->
+                        <div wire:key="modal-tab-basico" class="space-y-4">
+                            <!-- TELA 1: VALORES BÁSICOS -->
                         
                         <!-- Period Selection -->
                         <div class="grid grid-cols-2 gap-4">
@@ -841,8 +847,10 @@
                                 @error('investimento') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        </div>
                     @else
-                        <!-- TELA 2: PARÂMETROS OPCIONAIS E EXTRAS -->
+                        <div wire:key="modal-tab-avancado" class="space-y-4">
+                            <!-- TELA 2: PARÂMETROS OPCIONAIS E EXTRAS -->
 
                         <!-- Parâmetros Opcionais (Ignorar) -->
                         <div class="space-y-3">
@@ -920,6 +928,7 @@
                                     @error('extra_valor') <span class="text-[10px] text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+                        </div>
                         </div>
                     @endif
 
@@ -1035,6 +1044,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span x-text="message" class="text-sm font-semibold"></span>
+    </div>
     </div>
     @endif
 </div>
