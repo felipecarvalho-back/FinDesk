@@ -78,6 +78,8 @@ class FinanceDashboard extends Component
 
     public string $formTab = 'basico';
 
+    public string $currentScreen = 'dashboard';
+
     // Automatic calculation preview in modal
     public float $previewSalarioTeorico = 0.0;
 
@@ -459,8 +461,65 @@ class FinanceDashboard extends Component
         }
 
         $this->showFormModal = false;
+        $this->currentScreen = 'meses';
         $this->loadFinances();
         $this->dispatch('notify', ['message' => $msg]);
+    }
+
+    public function setScreen(string $screen): void
+    {
+        $this->currentScreen = $screen;
+        if ($screen !== 'detalhes') {
+            $this->editingId = null;
+        }
+    }
+
+    public function viewMonth(int $id): void
+    {
+        $this->openEditModal($id);
+        $this->showFormModal = false;
+        $this->currentScreen = 'detalhes';
+    }
+
+    public function getChartLabels(): array
+    {
+        return collect($this->finances)->map(function ($f) {
+            return $f->month_name.' / '.$f->year;
+        })->toArray();
+    }
+
+    public function getChartRecebido(): array
+    {
+        return collect($this->finances)->map(function ($f) {
+            return (float) $f->recebido;
+        })->toArray();
+    }
+
+    public function getChartSobrou(): array
+    {
+        return collect($this->finances)->map(function ($f) {
+            return (float) $f->saldo_final;
+        })->toArray();
+    }
+
+    public function getChartTotalCaxinha(): float
+    {
+        return (float) collect($this->finances)->sum('caxinha');
+    }
+
+    public function getChartTotalInvestimento(): float
+    {
+        return (float) collect($this->finances)->sum('investimento');
+    }
+
+    public function getChartTotalFatura(): float
+    {
+        return (float) collect($this->finances)->sum('fatura');
+    }
+
+    public function getChartTotalMae(): float
+    {
+        return (float) collect($this->finances)->sum('total_mae');
     }
 
     public function deleteFinance(int $id): void
