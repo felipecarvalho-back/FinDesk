@@ -53,25 +53,25 @@
             </div>
 
             <!-- Global Variables Quick View Badge -->
-            <div class="hidden lg:flex items-center space-x-4 bg-slate-950/60 border border-slate-800/60 rounded-lg px-4 py-2 text-xs text-slate-400">
-                <div>
-                    <span class="text-slate-500">Bolsa:</span>
-                    <span class="font-semibold text-slate-300">R$ {{ number_format($bolsa_auxilio, 2, ',', '.') }}</span>
+            <div class="hidden xl:flex items-center space-x-4 bg-slate-950/65 border border-slate-800/80 rounded-xl px-4 py-2 text-xs text-slate-400 select-none shadow-inner">
+                <div class="flex items-center space-x-1.5">
+                    <span class="text-slate-500 font-medium">Bolsa:</span>
+                    <span class="font-bold text-slate-200 whitespace-nowrap">R$ {{ number_format($bolsa_auxilio, 2, ',', '.') }}</span>
                 </div>
-                <div class="border-l border-slate-800 h-4"></div>
-                <div>
-                    <span class="text-slate-500">Alimentação/Dia:</span>
-                    <span class="font-semibold text-slate-300">R$ {{ number_format($alimentacao_dia, 2, ',', '.') }}</span>
+                <div class="border-l border-slate-800/80 h-3.5"></div>
+                <div class="flex items-center space-x-1.5">
+                    <span class="text-slate-500 font-medium">Alimentação/Dia:</span>
+                    <span class="font-bold text-slate-200 whitespace-nowrap">R$ {{ number_format($alimentacao_dia, 2, ',', '.') }}</span>
                 </div>
-                <div class="border-l border-slate-800 h-4"></div>
-                <div>
-                    <span class="text-slate-500">Transporte/Dia:</span>
-                    <span class="font-semibold text-slate-300">R$ {{ number_format($transporte_dia, 2, ',', '.') }}</span>
+                <div class="border-l border-slate-800/80 h-3.5"></div>
+                <div class="flex items-center space-x-1.5">
+                    <span class="text-slate-500 font-medium">Transporte/Dia:</span>
+                    <span class="font-bold text-slate-200 whitespace-nowrap">R$ {{ number_format($transporte_dia, 2, ',', '.') }}</span>
                 </div>
-                <div class="border-l border-slate-800 h-4"></div>
-                <div>
-                    <span class="text-slate-500">Mãe Fixo:</span>
-                    <span class="font-semibold text-slate-300">R$ {{ number_format($dinheiro_mae, 2, ',', '.') }}</span>
+                <div class="border-l border-slate-800/80 h-3.5"></div>
+                <div class="flex items-center space-x-1.5">
+                    <span class="text-slate-500 font-medium">Mãe Fixo:</span>
+                    <span class="font-bold text-slate-200 whitespace-nowrap">R$ {{ number_format($dinheiro_mae, 2, ',', '.') }}</span>
                 </div>
             </div>
 
@@ -420,10 +420,10 @@
                                         </div>
                                         @if($activeFinance->ignorar_bolsa || $activeFinance->ignorar_alimentacao || $activeFinance->ignorar_transporte)
                                             <div class="flex flex-wrap items-center mt-1.5 text-[10px] text-slate-500 font-medium">
-                                                <span class="mr-1.5">Desconsiderou:</span>
-                                                @if($activeFinance->ignorar_bolsa) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Bolsa</span> @endif
-                                                @if($activeFinance->ignorar_alimentacao) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Alimentação</span> @endif
-                                                @if($activeFinance->ignorar_transporte) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Transporte</span> @endif
+                                                <span class="text-slate-500 mr-2 text-[10px] uppercase font-semibold tracking-wider">Desconsiderou:</span>
+                                                @if($activeFinance->ignorar_bolsa) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-2 py-0.5 rounded text-[10px] mr-1.5 font-medium whitespace-nowrap">Bolsa</span> @endif
+                                                @if($activeFinance->ignorar_alimentacao) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-2 py-0.5 rounded text-[10px] mr-1.5 font-medium whitespace-nowrap">Alimentação</span> @endif
+                                                @if($activeFinance->ignorar_transporte) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-2 py-0.5 rounded text-[10px] mr-1.5 font-medium whitespace-nowrap">Transporte</span> @endif
                                             </div>
                                         @endif
                                     </div>
@@ -442,9 +442,9 @@
                                         </div>
                                         @if($activeFinance->ignorar_dinheiro_mae || $activeFinance->ignorar_conducao)
                                             <div class="flex flex-wrap items-center mt-1.5 text-[10px] text-slate-500 font-medium">
-                                                <span class="mr-1.5">Desconsiderou:</span>
-                                                @if($activeFinance->ignorar_dinheiro_mae) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Fixo</span> @endif
-                                                @if($activeFinance->ignorar_conducao) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-1.5 py-0.5 rounded text-[10px] mr-1 font-medium">Condução</span> @endif
+                                                <span class="text-slate-500 mr-2 text-[10px] uppercase font-semibold tracking-wider">Desconsiderou:</span>
+                                                @if($activeFinance->ignorar_dinheiro_mae) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-2 py-0.5 rounded text-[10px] mr-1.5 font-medium whitespace-nowrap">Fixo</span> @endif
+                                                @if($activeFinance->ignorar_conducao) <span class="bg-rose-950/40 text-rose-400 border border-rose-900/30 px-2 py-0.5 rounded text-[10px] mr-1.5 font-medium whitespace-nowrap">Condução</span> @endif
                                             </div>
                                         @endif
                                     </div>
@@ -704,29 +704,16 @@
                                                     <span class="font-bold text-teal-400">R$ {{ number_format($previewSaldoFinal, 2, ',', '.') }}</span>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <!-- Footer Action Buttons -->
-                                        <div class="flex items-center justify-between pt-4 border-t border-slate-850">
-                                            @if($formTab === 'basico')
-                                                <button type="button" wire:click="$set('formTab', 'avancado')" class="flex items-center space-x-1.5 px-4 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold transition text-indigo-400 hover:text-indigo-300">
-                                                    <span>Personalizar Cálculo ➔</span>
-                                                </button>
-                                            @else
-                                                <button type="button" wire:click="$set('formTab', 'basico')" class="flex items-center space-x-1.5 px-4 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold transition text-slate-300 hover:text-slate-100">
-                                                    <span>⬅ Voltar</span>
-                                                </button>
-                                            @endif
-                                            <div class="flex items-center space-x-3">
-                                                <button type="button" wire:click="setScreen('meses')" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm transition">
+                                            <!-- Footer Action Buttons -->
+                                            <div class="flex items-center justify-end pt-4 border-t border-slate-850 space-x-3">
+                                                <button type="button" wire:click="setScreen('meses')" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold text-slate-300 hover:text-slate-100 transition duration-200">
                                                     Cancelar
                                                 </button>
-                                                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10">
+                                                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10 active:scale-[0.98]">
                                                     Salvar Alterações
                                                 </button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                             </div>
+                                     </form>
                                 </div>
                             </div>
                         </div>
@@ -950,32 +937,13 @@
                     </div>
 
                     <!-- Footer Action Buttons -->
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-850">
-                        @if($formTab === 'basico')
-                            <button type="button" wire:click="$set('formTab', 'avancado')" class="flex items-center space-x-1.5 px-4 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold transition text-indigo-400 hover:text-indigo-300">
-                                <span>Personalizar Cálculo ➔</span>
-                            </button>
-                            <div class="flex items-center space-x-3">
-                                <button type="button" wire:click="$set('showFormModal', false)" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm transition">
-                                    Cancelar
-                                </button>
-                                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10">
-                                    {{ $editingId ? 'Salvar Alterações' : 'Adicionar Mês' }}
-                                </button>
-                            </div>
-                        @else
-                            <button type="button" wire:click="$set('formTab', 'basico')" class="flex items-center space-x-1.5 px-4 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold transition text-slate-300 hover:text-slate-100">
-                                <span>⬅ Voltar</span>
-                            </button>
-                            <div class="flex items-center space-x-3">
-                                <button type="button" wire:click="$set('showFormModal', false)" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm transition">
-                                    Cancelar
-                                </button>
-                                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10">
-                                    {{ $editingId ? 'Salvar Alterações' : 'Adicionar Mês' }}
-                                </button>
-                            </div>
-                        @endif
+                    <div class="flex items-center justify-end pt-4 border-t border-slate-850 space-x-3">
+                        <button type="button" wire:click="$set('showFormModal', false)" class="px-5 py-2 border border-slate-800 hover:bg-slate-850 rounded-lg text-sm font-semibold text-slate-300 hover:text-slate-100 transition duration-200">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-semibold rounded-lg text-sm transition shadow-lg shadow-indigo-500/10 active:scale-[0.98]">
+                            {{ $editingId ? 'Salvar Alterações' : 'Adicionar Mês' }}
+                        </button>
                     </div>
                 </form>
             </div>
