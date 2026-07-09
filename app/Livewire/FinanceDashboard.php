@@ -7,6 +7,8 @@ use App\Models\Setting;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Native\Laravel\Facades\Notification;
+use Native\Laravel\Facades\Window;
 
 class FinanceDashboard extends Component
 {
@@ -29,7 +31,6 @@ class FinanceDashboard extends Component
 
     // Modal state controllers
     public bool $showFormModal = false;
-
     public bool $showSettingsModal = false;
 
     // Form fields for create/edit
@@ -110,6 +111,8 @@ class FinanceDashboard extends Component
         'ignorar_fatura' => 'required|boolean',
     ];
 
+
+
     public function mount(): void
     {
         $this->isAuthenticated = session()->has('authenticated');
@@ -153,12 +156,6 @@ class FinanceDashboard extends Component
             ->all();
     }
 
-    public function openSettingsModal(): void
-    {
-        $this->loadSettings();
-        $this->showSettingsModal = true;
-    }
-
     public function saveSettings(): void
     {
         $this->validate([
@@ -173,11 +170,21 @@ class FinanceDashboard extends Component
         Setting::setValue('transporte_dia', $this->transporte_dia);
         Setting::setValue('dinheiro_mae', $this->dinheiro_mae);
 
+        try {
+            Notification::title('FinDesk')
+                ->message('Configurações globais salvas com sucesso!')
+                ->show();
+        } catch (\Throwable $e) {
+            $this->dispatch('notify', ['message' => 'Configurações globais salvas com sucesso!']);
+        }
+        
+        $this->loadFinances();
         $this->showSettingsModal = false;
-        $this->dispatch('notify', ['message' => 'Configurações globais salvas com sucesso!']);
+    }
 
-        // Refresh calculations for preview
-        $this->recalculatePreviews();
+    public function openSettingsModal(): void
+    {
+        $this->showSettingsModal = true;
     }
 
     public function openCreateModal(): void
@@ -463,6 +470,15 @@ class FinanceDashboard extends Component
         $this->showFormModal = false;
         $this->currentScreen = 'meses';
         $this->loadFinances();
+
+        try {
+            Notification::title('FinDesk')
+                ->message($msg)
+                ->show();
+        } catch (\Throwable $e) {
+            // Silently ignore if not in native env
+        }
+
         $this->dispatch('notify', ['message' => $msg]);
     }
 
@@ -527,6 +543,15 @@ class FinanceDashboard extends Component
         $finance = MonthlyFinance::findOrFail($id);
         $finance->delete();
         $this->loadFinances();
+
+        try {
+            Notification::title('FinDesk')
+                ->message('Registro excluído com sucesso!')
+                ->show();
+        } catch (\Throwable $e) {
+            //
+        }
+
         $this->dispatch('notify', ['message' => 'Registro excluído com sucesso!']);
     }
 

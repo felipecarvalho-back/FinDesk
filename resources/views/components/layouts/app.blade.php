@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-slate-950 text-slate-100">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark h-full bg-slate-950 text-slate-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +27,9 @@
             e.preventDefault();
         });
     </script>
+
+    @livewireStyles
+    @fluxAppearance
 </head>
 <body class="h-full font-sans antialiased overflow-hidden selection:bg-indigo-500 selection:text-white">
     <div class="flex h-full w-full overflow-hidden bg-slate-950">
@@ -35,5 +38,7 @@
             {{ $slot }}
         </main>
     </div>
+    @livewireScripts
+    @fluxScripts
 </body>
 </html>
