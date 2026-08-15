@@ -16,10 +16,14 @@ class MonthlyFinance extends Model
         'caxinha',
         'investimento',
         'fatura',
+        'internet',
+        'gemini',
         'bolsa_auxilio_snapshot',
         'alimentacao_dia_snapshot',
         'transporte_dia_snapshot',
         'dinheiro_mae_snapshot',
+        'internet_snapshot',
+        'gemini_snapshot',
         'extra_nome',
         'extra_valor',
         'extra_tipo',
@@ -31,6 +35,8 @@ class MonthlyFinance extends Model
         'ignorar_caxinha',
         'ignorar_investimento',
         'ignorar_fatura',
+        'ignorar_internet',
+        'ignorar_gemini',
     ];
 
     protected $casts = [
@@ -43,10 +49,14 @@ class MonthlyFinance extends Model
         'caxinha' => 'float',
         'investimento' => 'float',
         'fatura' => 'float',
+        'internet' => 'float',
+        'gemini' => 'float',
         'bolsa_auxilio_snapshot' => 'float',
         'alimentacao_dia_snapshot' => 'float',
         'transporte_dia_snapshot' => 'float',
         'dinheiro_mae_snapshot' => 'float',
+        'internet_snapshot' => 'float',
+        'gemini_snapshot' => 'float',
         'extra_valor' => 'float',
         'ignorar_bolsa' => 'boolean',
         'ignorar_alimentacao' => 'boolean',
@@ -56,6 +66,8 @@ class MonthlyFinance extends Model
         'ignorar_caxinha' => 'boolean',
         'ignorar_investimento' => 'boolean',
         'ignorar_fatura' => 'boolean',
+        'ignorar_internet' => 'boolean',
+        'ignorar_gemini' => 'boolean',
     ];
 
     private static array $monthsPt = [
@@ -113,6 +125,8 @@ class MonthlyFinance extends Model
         $saldo -= $this->ignorar_caxinha ? 0 : $this->caxinha;
         $saldo -= $this->ignorar_investimento ? 0 : $this->investimento;
         $saldo -= $this->ignorar_fatura ? 0 : $this->fatura;
+        $saldo -= $this->ignorar_internet ? 0 : $this->internet;
+        $saldo -= $this->ignorar_gemini ? 0 : $this->gemini;
 
         if ($this->extra_valor > 0) {
             if ($this->extra_tipo === 'entrada') {
