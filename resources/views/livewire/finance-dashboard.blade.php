@@ -30,88 +30,80 @@
     @else
         <div wire:key="authenticated-app-wrapper" class="flex-1 flex flex-col min-h-0 w-full relative">
             <!-- Top Header Navigation -->
-            <header class="sticky top-0 z-10 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <header class="sticky top-0 z-20 bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center space-x-3">
-                    <div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center shadow-md shadow-indigo-500/20">
                         <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
-                            FinDesk
-                        </h1>
-                        <p class="text-xs text-slate-400">Gerenciador de Finanças Pessoais Desktop</p>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base font-bold tracking-tight text-white">FinDesk</h1>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Desktop</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Gerenciador de Finanças Pessoais</p>
                     </div>
                 </div>
 
                 <div class="flex items-center space-x-3">
                     <!-- Screen Selection Tabs -->
-                    <div class="flex items-center bg-slate-950/70 p-1 rounded-xl border border-slate-800/80 space-x-1">
+                    <div class="flex items-center bg-slate-950/90 p-1 rounded-xl border border-slate-800/80 shadow-inner space-x-1">
                         <button type="button" wire:click="setScreen('dashboard')"
-                            class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition {{ $currentScreen === 'dashboard' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200' }}">
-                            Painel Geral
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 {{ $currentScreen === 'dashboard' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                            <svg class="h-3.5 w-3.5 {{ $currentScreen === 'dashboard' ? 'text-white' : 'text-slate-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                            <span>Painel Geral</span>
                         </button>
                         <button type="button" wire:click="setScreen('meses')"
-                            class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition {{ $currentScreen === 'meses' || $currentScreen === 'detalhes' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200' }}">
-                            Meus Meses
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 {{ $currentScreen === 'meses' || $currentScreen === 'detalhes' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                            <svg class="h-3.5 w-3.5 {{ $currentScreen === 'meses' || $currentScreen === 'detalhes' ? 'text-white' : 'text-slate-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>Meus Meses</span>
                         </button>
                         <button type="button" wire:click="setScreen('caixinhas')"
-                            class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition {{ $currentScreen === 'caixinhas' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200' }}">
-                            Caixinhas
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 {{ $currentScreen === 'caixinhas' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                            <svg class="h-3.5 w-3.5 {{ $currentScreen === 'caixinhas' ? 'text-white' : 'text-slate-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                            <span>Caixinhas</span>
                         </button>
                         <button type="button" wire:click="setScreen('investimentos')"
-                            class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition {{ $currentScreen === 'investimentos' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200' }}">
-                            Investimentos
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 {{ $currentScreen === 'investimentos' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                            <svg class="h-3.5 w-3.5 {{ $currentScreen === 'investimentos' ? 'text-white' : 'text-slate-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                            <span>Investimentos</span>
                         </button>
                     </div>
 
-                    <!-- Privacy Toggle Button -->
-                    <button type="button" wire:click="togglePrivacy"
-                        title="{{ $hideValues ? 'Clique para mostrar valores' : 'Clique para ocultar valores sensíveis' }}"
-                        class="flex items-center space-x-2 bg-slate-900 border border-slate-800 hover:border-slate-700 active:bg-slate-950 hover:bg-slate-800 px-3 py-2 rounded-xl text-xs font-medium transition duration-200 {{ $hideValues ? 'text-amber-400 border-amber-500/30' : 'text-slate-300' }}">
-                        @if($hideValues)
-                            <svg class="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
-                            </svg>
-                            <span class="hidden sm:inline">Valores Ocultos</span>
-                        @else
-                            <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                            <span class="hidden sm:inline">Ocultar</span>
-                        @endif
-                    </button>
-
                     <!-- Global Variables Quick View Badge -->
-                    <div class="hidden 2xl:flex items-center space-x-3 bg-slate-950/65 border border-slate-800/80 rounded-xl px-3.5 py-1.5 text-xs text-slate-400 select-none shadow-inner">
-                        <div class="flex items-center space-x-1">
+                    <div class="hidden 2xl:flex items-center space-x-3 bg-slate-950/80 border border-slate-800/90 rounded-xl px-3.5 py-1.5 text-xs text-slate-400 select-none shadow-inner">
+                        <div class="flex items-center space-x-1.5">
                             <span class="text-slate-500 font-medium">Bolsa:</span>
                             <span class="font-bold text-slate-200 whitespace-nowrap">
                                 {{ $hideValues ? '••••' : 'R$ ' . number_format($bolsa_auxilio, 2, ',', '.') }}
                             </span>
                         </div>
-                        <div class="border-l border-slate-800/80 h-3"></div>
-                        <div class="flex items-center space-x-1">
+                        <div class="border-l border-slate-800 h-3.5"></div>
+                        <div class="flex items-center space-x-1.5">
                             <span class="text-slate-500 font-medium">VR/dia:</span>
                             <span class="font-bold text-slate-200 whitespace-nowrap">
                                 {{ $hideValues ? '••••' : 'R$ ' . number_format($alimentacao_dia, 2, ',', '.') }}
                             </span>
                         </div>
-                        <div class="border-l border-slate-800/80 h-3"></div>
-                        <div class="flex items-center space-x-1">
+                        <div class="border-l border-slate-800 h-3.5"></div>
+                        <div class="flex items-center space-x-1.5">
                             <span class="text-slate-500 font-medium">Net/mês:</span>
                             <span class="font-bold text-slate-200 whitespace-nowrap">
                                 {{ $hideValues ? '••••' : 'R$ ' . number_format($internet_padrao, 2, ',', '.') }}
                             </span>
                         </div>
-                        <div class="border-l border-slate-800/80 h-3"></div>
-                        <div class="flex items-center space-x-1">
+                        <div class="border-l border-slate-800 h-3.5"></div>
+                        <div class="flex items-center space-x-1.5">
                             <span class="text-slate-500 font-medium">Gemini/mês:</span>
                             <span class="font-bold text-slate-200 whitespace-nowrap">
                                 {{ $hideValues ? '••••' : 'R$ ' . number_format($gemini_padrao, 2, ',', '.') }}
@@ -119,16 +111,45 @@
                         </div>
                     </div>
 
+                    {{-- Privacy Toggle Button --}}
+                    <button type="button" wire:click="togglePrivacy"
+                        title="{{ $hideValues ? 'Mostrar valores' : 'Ocultar valores sensíveis' }}"
+                        @class([
+                            'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150',
+                            'bg-amber-500/15 text-amber-400' => $hideValues,
+                            'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' => !$hideValues,
+                        ])>
+                        @if($hideValues)
+                            <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                            </svg>
+                            <span class="hidden sm:inline">Oculto</span>
+                        @else
+                            <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <span class="hidden sm:inline">Ocultar</span>
+                        @endif
+                    </button>
+
+                    {{-- Divider --}}
+                    <div class="h-4 w-px bg-slate-800"></div>
+
+                    {{-- Globais Button --}}
                     <button type="button" wire:click="openSettingsModal"
-                        class="flex items-center space-x-2 bg-slate-900 border border-slate-800 hover:border-slate-700 active:bg-slate-950 hover:bg-slate-800 px-3.5 py-2 rounded-xl text-xs font-medium transition duration-200">
-                        <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 transition-all duration-150">
+                        <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <span>Globais</span>
+                        <span class="hidden sm:inline">Globais</span>
                     </button>
+
                 </div>
             </header>
 
@@ -910,155 +931,244 @@
             <!-- ========================================== -->
             @if($showFormModal)
                 <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
-                        <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-100">
-                                    {{ $editingId ? 'Editar Registro Financeiro' : 'Novo Registro Mensal' }}
-                                </h3>
-                                <p class="text-xs text-slate-400">Preencha os dados do mês e configure despesas/repasses</p>
+                    <div class="bg-slate-900 border border-slate-800/90 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/40">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-xl bg-indigo-500/15 border border-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-100">
+                                        {{ $editingId ? 'Editar Registro Financeiro' : 'Novo Registro Mensal' }}
+                                    </h3>
+                                    <p class="text-xs text-slate-400">Preencha os dados do mês e configure despesas/repasses</p>
+                                </div>
                             </div>
-                            <button type="button" wire:click="$set('showFormModal', false)" class="text-slate-400 hover:text-slate-200">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <button type="button" wire:click="$set('showFormModal', false)"
+                                class="text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-lg p-1.5 transition">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
 
-                        <!-- Form Modal Tabs -->
-                        <div class="px-6 pt-4 flex space-x-2 border-b border-slate-800 text-xs">
-                            <button type="button" wire:click="$set('formTab', 'basico')"
-                                class="pb-3 font-semibold transition border-b-2 {{ $formTab === 'basico' ? 'border-indigo-500 text-indigo-400' : 'border-transparent text-slate-400 hover:text-slate-200' }}">
-                                1. Dias & Receitas
-                            </button>
-                            <button type="button" wire:click="$set('formTab', 'despesas')"
-                                class="pb-3 font-semibold transition border-b-2 {{ $formTab === 'despesas' ? 'border-indigo-500 text-indigo-400' : 'border-transparent text-slate-400 hover:text-slate-200' }}">
-                                2. Despesas & Fatura
-                            </button>
-                            <button type="button" wire:click="$set('formTab', 'extras')"
-                                class="pb-3 font-semibold transition border-b-2 {{ $formTab === 'extras' ? 'border-indigo-500 text-indigo-400' : 'border-transparent text-slate-400 hover:text-slate-200' }}">
-                                3. Ignorar & Extras
-                            </button>
+                        {{-- Form Modal Tabs (Segmented Control) --}}
+                        <div class="px-5 pt-4 pb-1">
+                            <div class="flex items-center bg-slate-950/90 p-1 rounded-xl border border-slate-800/80 shadow-inner gap-1">
+                                <button type="button" wire:click="$set('formTab', 'basico')"
+                                    class="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 {{ $formTab === 'basico' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                                    <span>1. Receitas & Dias</span>
+                                    @if($errors->hasAny(['month', 'year', 'dias_trabalhados', 'recebido']))
+                                        <span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+                                    @endif
+                                </button>
+                                <button type="button" wire:click="$set('formTab', 'despesas')"
+                                    class="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 {{ $formTab === 'despesas' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                                    <span>2. Despesas</span>
+                                    @if($errors->hasAny(['conducao_dia', 'dias_conducao', 'caxinha', 'investimento', 'fatura', 'internet', 'gemini']))
+                                        <span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+                                    @endif
+                                </button>
+                                <button type="button" wire:click="$set('formTab', 'extras')"
+                                    class="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 {{ $formTab === 'extras' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60' }}">
+                                    <span>3. Extras & Ignorar</span>
+                                    @if($errors->hasAny(['extra_valor', 'extra_nome', 'extra_tipo']))
+                                        <span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+                                    @endif
+                                </button>
+                            </div>
                         </div>
 
-                        <form wire:submit.prevent="saveFinance" class="p-6 space-y-5">
-                            @if($formTab === 'basico')
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Mês</label>
-                                        <select wire:model.live="month" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                        <form wire:submit.prevent="saveFinance" class="p-5 space-y-4">
+                            @if($errors->any())
+                                <div class="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-xs text-rose-300 space-y-1">
+                                    <p class="font-bold flex items-center gap-1.5 text-rose-400">
+                                        <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                        <span>Corrija os campos com erro para salvar:</span>
+                                    </p>
+                                    <ul class="list-disc list-inside text-[11px] text-rose-300/90 pl-1 space-y-0.5">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            {{-- TAB 1: BÁSICO (RECEITAS & DIAS) --}}
+                            <div wire:key="container-tab-basico" class="{{ $formTab === 'basico' ? 'space-y-3.5' : 'hidden' }}">
+                                <div class="grid grid-cols-2 gap-3.5">
+                                    <div wire:key="field-wrapper-month" class="space-y-1">
+                                        <label for="field_month" class="block text-xs font-semibold text-slate-300">Mês de Referência</label>
+                                        <select id="field_month" name="month" wire:key="input-field-month" wire:model="month"
+                                            class="w-full bg-slate-950/80 border {{ $errors->has('month') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition">
                                             @for($m = 1; $m <= 12; $m++)
                                                 <option value="{{ $m }}">{{ \Carbon\Carbon::create(2026, $m, 1)->locale('pt_BR')->translatedFormat('F') }}</option>
                                             @endfor
                                         </select>
+                                        @error('month') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
                                     </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Ano</label>
-                                        <input type="number" wire:model.live="year" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                                    <div wire:key="field-wrapper-year" class="space-y-1">
+                                        <label for="field_year" class="block text-xs font-semibold text-slate-300">Ano</label>
+                                        <input type="number" id="field_year" name="year" wire:key="input-field-year" wire:model="year"
+                                            class="w-full bg-slate-950/80 border {{ $errors->has('year') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        @error('year') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
                                     </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Dias Trabalhados</label>
-                                        <input type="number" wire:model.live.debounce.300ms="dias_trabalhados" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                                    <div wire:key="field-wrapper-dias-trabalhados" class="space-y-1">
+                                        <label for="field_dias_trabalhados" class="block text-xs font-semibold text-slate-300">Dias Trabalhados</label>
+                                        <input type="number" id="field_dias_trabalhados" name="dias_trabalhados" wire:key="input-field-dias-trabalhados" wire:model="dias_trabalhados" placeholder="ex: 20"
+                                            class="w-full bg-slate-950/80 border {{ $errors->has('dias_trabalhados') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        @error('dias_trabalhados') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
                                     </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Recebido Real (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="recebido" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                        <span class="text-[10px] text-slate-500 mt-1 block">Sugerido p/ fórmula: R$ {{ number_format($previewSalarioTeorico, 2, ',', '.') }}</span>
-                                    </div>
-                                </div>
-                            @elseif($formTab === 'despesas')
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Condução / Dia Mãe (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="conducao_dia" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Dias Condução Mãe</label>
-                                        <input type="number" wire:model.live.debounce.300ms="dias_conducao" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Caixinha (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="caxinha" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Investimento (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="investimento" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Fatura Cartão (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="fatura" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Internet (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="internet" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    </div>
-                                    <div class="col-span-2">
-                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Gemini AI (R$)</label>
-                                        <input type="number" step="0.01" wire:model.live.debounce.300ms="gemini" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                                    <div wire:key="field-wrapper-recebido" class="space-y-1">
+                                        <label for="field_recebido" class="block text-xs font-semibold text-slate-300">Recebido Real</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_recebido" name="recebido" wire:key="input-field-recebido" wire:model="recebido"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('recebido') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-bold text-emerald-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        <span class="text-[10px] text-slate-500 block mt-0.5">Sugerido: R$ {{ number_format($previewSalarioTeorico, 2, ',', '.') }}</span>
+                                        @error('recebido') <span class="text-rose-400 text-[10px] block">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                            @elseif($formTab === 'extras')
-                                <div class="space-y-4">
-                                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
-                                        <span class="text-xs font-bold text-slate-200 block uppercase tracking-wider">Ignorar Despesas no Cálculo</span>
-                                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_bolsa" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                            </div>
+
+                            {{-- TAB 2: DESPESAS --}}
+                            <div wire:key="container-tab-despesas" class="{{ $formTab === 'despesas' ? 'space-y-3.5' : 'hidden' }}">
+                                <div class="grid grid-cols-2 gap-3.5">
+                                    <div wire:key="field-wrapper-conducao-dia" class="space-y-1">
+                                        <label for="field_conducao_dia" class="block text-xs font-semibold text-slate-300">Condução / Dia Mãe</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_conducao_dia" name="conducao_dia" wire:key="input-field-conducao-dia" wire:model="conducao_dia"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('conducao_dia') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        @error('conducao_dia') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div wire:key="field-wrapper-dias-conducao" class="space-y-1">
+                                        <label for="field_dias_conducao" class="block text-xs font-semibold text-slate-300">Dias Condução Mãe</label>
+                                        <input type="number" id="field_dias_conducao" name="dias_conducao" wire:key="input-field-dias-conducao" wire:model="dias_conducao" placeholder="ex: 20"
+                                            class="w-full bg-slate-950/80 border {{ $errors->has('dias_conducao') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl px-3.5 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        @error('dias_conducao') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div wire:key="field-wrapper-caxinha" class="space-y-1">
+                                        <label for="field_caxinha" class="block text-xs font-semibold text-slate-300">Caixinha</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_caxinha" name="caxinha" wire:key="input-field-caxinha" wire:model="caxinha"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('caxinha') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        @error('caxinha') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div wire:key="field-wrapper-investimento" class="space-y-1">
+                                        <label for="field_investimento" class="block text-xs font-semibold text-slate-300">Investimento</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_investimento" name="investimento" wire:key="input-field-investimento" wire:model="investimento"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('investimento') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        @error('investimento') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div wire:key="field-wrapper-fatura" class="space-y-1">
+                                        <label for="field_fatura" class="block text-xs font-semibold text-slate-300">Fatura Cartão</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_fatura" name="fatura" wire:key="input-field-fatura" wire:model="fatura"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('fatura') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-rose-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        @error('fatura') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div wire:key="field-wrapper-internet" class="space-y-1">
+                                        <label for="field_internet" class="block text-xs font-semibold text-slate-300">Internet</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_internet" name="internet" wire:key="input-field-internet" wire:model="internet"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('internet') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        @error('internet') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                    <div wire:key="field-wrapper-gemini" class="col-span-2 space-y-1">
+                                        <label for="field_gemini" class="block text-xs font-semibold text-slate-300">Gemini AI</label>
+                                        <div class="relative rounded-xl shadow-sm">
+                                            <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                            <input type="number" step="0.01" id="field_gemini" name="gemini" wire:key="input-field-gemini" wire:model="gemini"
+                                                class="w-full bg-slate-950/80 border {{ $errors->has('gemini') ? 'border-rose-500' : 'border-slate-800' }} rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                        @error('gemini') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- TAB 3: EXTRAS & IGNORAR --}}
+                            <div wire:key="container-tab-extras" class="{{ $formTab === 'extras' ? 'space-y-3.5' : 'hidden' }}">
+                                <div class="space-y-3.5">
+                                    <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 space-y-2.5">
+                                        <span class="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">Ignorar Despesas no Cálculo</span>
+                                        <div class="grid grid-cols-2 gap-2 text-xs">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_bolsa" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Bolsa</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_alimentacao" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_alimentacao" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar VR</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_transporte" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_transporte" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar VT</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_dinheiro_mae" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_dinheiro_mae" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Mãe Fixo</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_conducao" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_conducao" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Condução</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_caxinha" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_caxinha" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Caixinha</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_investimento" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_investimento" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Investimento</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_fatura" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_fatura" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Fatura</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_internet" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_internet" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Internet</span>
                                             </label>
-                                            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                                                <input type="checkbox" wire:model.live="ignorar_gemini" class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+                                            <label class="flex items-center space-x-2 text-slate-300 hover:text-white cursor-pointer bg-slate-900/60 border border-slate-800/60 rounded-lg px-2.5 py-1.5 transition">
+                                                <input type="checkbox" wire:model.live="ignorar_gemini" class="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-0">
                                                 <span>Ignorar Gemini</span>
                                             </label>
                                         </div>
                                     </div>
 
-                                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
-                                        <span class="text-xs font-bold text-slate-200 block uppercase tracking-wider">Lançamento Extra (Opcional)</span>
-                                        <div class="grid grid-cols-3 gap-3">
-                                            <div>
-                                                <label class="block text-[11px] text-slate-400 mb-1">Nome</label>
-                                                <input type="text" wire:model="extra_nome" placeholder="ex: Bônus, Curso" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100">
+                                    <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 space-y-2.5">
+                                        <span class="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">Lançamento Extra (Opcional)</span>
+                                        <div class="grid grid-cols-3 gap-2.5">
+                                            <div wire:key="field-wrapper-extra-nome" class="space-y-1">
+                                                <label for="field_extra_nome" class="block text-[10px] font-semibold text-slate-400">Nome</label>
+                                                <input type="text" id="field_extra_nome" name="extra_nome" wire:key="input-field-extra-nome" wire:model="extra_nome" placeholder="ex: Bônus"
+                                                    class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:border-indigo-500 focus:outline-none">
                                             </div>
-                                            <div>
-                                                <label class="block text-[11px] text-slate-400 mb-1">Valor (R$)</label>
-                                                <input type="number" step="0.01" wire:model.live.debounce.300ms="extra_valor" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100">
+                                            <div wire:key="field-wrapper-extra-valor" class="space-y-1">
+                                                <label for="field_extra_valor" class="block text-[10px] font-semibold text-slate-400">Valor (R$)</label>
+                                                <input type="number" step="0.01" id="field_extra_valor" name="extra_valor" wire:key="input-field-extra-valor" wire:model="extra_valor" placeholder="0.00"
+                                                    class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:border-indigo-500 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
                                             </div>
-                                            <div>
-                                                <label class="block text-[11px] text-slate-400 mb-1">Tipo</label>
-                                                <select wire:model.live="extra_tipo" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100">
+                                            <div wire:key="field-wrapper-extra-tipo" class="space-y-1">
+                                                <label for="field_extra_tipo" class="block text-[10px] font-semibold text-slate-400">Tipo</label>
+                                                <select id="field_extra_tipo" name="extra_tipo" wire:key="input-field-extra-tipo" wire:model="extra_tipo"
+                                                    class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-2 py-1.5 text-xs text-slate-100 focus:border-indigo-500 focus:outline-none">
                                                     <option value="saida">Saída (-)</option>
                                                     <option value="entrada">Entrada (+)</option>
                                                 </select>
@@ -1066,30 +1176,31 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
 
-                            <!-- Calculation Preview Card in Modal -->
-                            <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800/80 flex items-center justify-between text-xs">
+                            {{-- Calculation Preview Card in Modal --}}
+                            <div class="bg-slate-950/90 p-3.5 rounded-xl border border-slate-800/80 flex items-center justify-between text-xs shadow-inner">
                                 <div>
-                                    <span class="text-slate-500 block">Total Mãe Previsto:</span>
-                                    <span class="font-bold text-amber-400">R$ {{ number_format($previewMae, 2, ',', '.') }}</span>
+                                    <span class="text-[11px] text-slate-400 block font-medium">Total Mãe Previsto</span>
+                                    <span class="font-bold text-amber-400 text-sm">R$ {{ number_format($previewMae, 2, ',', '.') }}</span>
                                 </div>
-                                <div class="border-l border-slate-800 h-6"></div>
-                                <div>
-                                    <span class="text-slate-500 block">Saldo Livre Previsto:</span>
-                                    <span class="font-bold {{ $previewSaldoFinal >= 0 ? 'text-teal-400' : 'text-rose-400' }}">
+                                <div class="border-l border-slate-800 h-7"></div>
+                                <div class="text-right">
+                                    <span class="text-[11px] text-slate-400 block font-medium">Saldo Livre Previsto</span>
+                                    <span class="font-bold text-sm {{ $previewSaldoFinal >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">
                                         R$ {{ number_format($previewSaldoFinal, 2, ',', '.') }}
                                     </span>
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-end space-x-3 pt-2">
+                            {{-- Footer Actions --}}
+                            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-800/60">
                                 <button type="button" wire:click="$set('showFormModal', false)"
-                                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+                                    class="px-4 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl text-xs font-semibold transition">
                                     Cancelar
                                 </button>
                                 <button type="submit"
-                                    class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/30 transition">
+                                    class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition">
                                     Salvar Registro
                                 </button>
                             </div>
@@ -1099,54 +1210,130 @@
             @endif
 
             <!-- ========================================== -->
-            <!-- MODAL: CONFIGURAÇÕES GLOBAIS -->
+            <!-- MODAL: CONFIGURAÇÕES GLOBAIS (FALLBACK WEB) -->
             <!-- ========================================== -->
             @if($showSettingsModal)
                 <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
-                        <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-100">Valores Globais Padrão</h3>
-                                <p class="text-xs text-slate-400">Parâmetros utilizados ao criar novos registros</p>
+                    <div class="bg-[#0f1117] border border-white/[0.08] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 border-b border-white/[0.07] flex items-center justify-between bg-[#0c0e15]">
+                            <div class="flex items-center gap-2.5">
+                                <div class="h-8 w-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold text-slate-100">Valores Globais Padrão</h3>
+                                    <p class="text-[11px] text-slate-500">Parâmetros base para novos meses</p>
+                                </div>
                             </div>
-                            <button type="button" wire:click="$set('showSettingsModal', false)" class="text-slate-400 hover:text-slate-200">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
                         </div>
-                        <form wire:submit.prevent="saveSettings" class="p-6 space-y-4">
+
+                        <form wire:submit.prevent="saveSettings" class="p-4 space-y-3.5">
+                            {{-- Renda Base --}}
                             <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Bolsa Auxílio Padrão (R$)</label>
-                                <input type="number" step="0.01" wire:model="bolsa_auxilio" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Renda</p>
+                                <div class="rounded-xl border border-white/[0.07] overflow-hidden">
+                                    <div class="flex items-center bg-slate-900/40 px-3.5 py-2.5 gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <label for="global_bolsa_auxilio" class="text-xs font-semibold text-slate-200 block cursor-pointer">Bolsa Auxílio</label>
+                                            <p class="text-[10px] text-slate-500">Valor base mensal</p>
+                                        </div>
+                                        <div class="flex items-center shrink-0 w-32 bg-slate-800/60 border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-indigo-500 transition">
+                                            <span class="pl-2.5 pr-1 text-[11px] font-semibold text-slate-500 select-none">R$</span>
+                                            <input type="number" step="0.01" id="global_bolsa_auxilio" name="bolsa_auxilio" wire:key="global-input-bolsa-auxilio" wire:model="bolsa_auxilio"
+                                                class="flex-1 min-w-0 bg-transparent py-1 pr-2.5 text-xs font-bold text-slate-100 text-right focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                @error('bolsa_auxilio') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
                             </div>
+
+                            {{-- Despesas Fixas --}}
                             <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Alimentação por Dia / VR (R$)</label>
-                                <input type="number" step="0.01" wire:model="alimentacao_dia" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Despesas Fixas</p>
+                                <div class="rounded-xl border border-white/[0.07] overflow-hidden divide-y divide-white/[0.07]">
+                                    <div class="flex items-center bg-slate-900/40 px-3.5 py-2.5 gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <label for="global_dinheiro_mae" class="text-xs font-semibold text-slate-200 block cursor-pointer">Dinheiro Mãe</label>
+                                            <p class="text-[10px] text-slate-500">Repasse mensal fixo</p>
+                                        </div>
+                                        <div class="flex items-center shrink-0 w-32 bg-slate-800/60 border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-indigo-500 transition">
+                                            <span class="pl-2.5 pr-1 text-[11px] font-semibold text-slate-500 select-none">R$</span>
+                                            <input type="number" step="0.01" id="global_dinheiro_mae" name="dinheiro_mae" wire:key="global-input-dinheiro-mae" wire:model="dinheiro_mae"
+                                                class="flex-1 min-w-0 bg-transparent py-1 pr-2.5 text-xs font-bold text-slate-100 text-right focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center bg-slate-900/40 px-3.5 py-2.5 gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <label for="global_internet_padrao" class="text-xs font-semibold text-slate-200 block cursor-pointer">Internet</label>
+                                            <p class="text-[10px] text-slate-500">Plano mensal</p>
+                                        </div>
+                                        <div class="flex items-center shrink-0 w-32 bg-slate-800/60 border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-indigo-500 transition">
+                                            <span class="pl-2.5 pr-1 text-[11px] font-semibold text-slate-500 select-none">R$</span>
+                                            <input type="number" step="0.01" id="global_internet_padrao" name="internet_padrao" wire:key="global-input-internet-padrao" wire:model="internet_padrao"
+                                                class="flex-1 min-w-0 bg-transparent py-1 pr-2.5 text-xs font-bold text-slate-100 text-right focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center bg-slate-900/40 px-3.5 py-2.5 gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <label for="global_gemini_padrao" class="text-xs font-semibold text-slate-200 block cursor-pointer">Gemini AI</label>
+                                            <p class="text-[10px] text-slate-500">Assinatura mensal</p>
+                                        </div>
+                                        <div class="flex items-center shrink-0 w-32 bg-slate-800/60 border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-indigo-500 transition">
+                                            <span class="pl-2.5 pr-1 text-[11px] font-semibold text-slate-500 select-none">R$</span>
+                                            <input type="number" step="0.01" id="global_gemini_padrao" name="gemini_padrao" wire:key="global-input-gemini-padrao" wire:model="gemini_padrao"
+                                                class="flex-1 min-w-0 bg-transparent py-1 pr-2.5 text-xs font-bold text-slate-100 text-right focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                @error('dinheiro_mae') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                @error('internet_padrao') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                @error('gemini_padrao') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
                             </div>
+
+                            {{-- Custos Diários --}}
                             <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Transporte por Dia / VT (R$)</label>
-                                <input type="number" step="0.01" wire:model="transporte_dia" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Custos Diários</p>
+                                <div class="rounded-xl border border-white/[0.07] overflow-hidden divide-y divide-white/[0.07]">
+                                    <div class="flex items-center bg-slate-900/40 px-3.5 py-2.5 gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <label for="global_alimentacao_dia" class="text-xs font-semibold text-slate-200 block cursor-pointer">Alimentação / VR</label>
+                                            <p class="text-[10px] text-slate-500">Refeição por dia útil</p>
+                                        </div>
+                                        <div class="flex items-center shrink-0 w-32 bg-slate-800/60 border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-indigo-500 transition">
+                                            <span class="pl-2.5 pr-1 text-[11px] font-semibold text-slate-500 select-none">R$</span>
+                                            <input type="number" step="0.01" id="global_alimentacao_dia" name="alimentacao_dia" wire:key="global-input-alimentacao-dia" wire:model="alimentacao_dia"
+                                                class="flex-1 min-w-0 bg-transparent py-1 pr-2.5 text-xs font-bold text-slate-100 text-right focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center bg-slate-900/40 px-3.5 py-2.5 gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <label for="global_transporte_dia" class="text-xs font-semibold text-slate-200 block cursor-pointer">Transporte / VT</label>
+                                            <p class="text-[10px] text-slate-500">Passagem por dia útil</p>
+                                        </div>
+                                        <div class="flex items-center shrink-0 w-32 bg-slate-800/60 border border-white/[0.08] rounded-lg overflow-hidden focus-within:border-indigo-500 transition">
+                                            <span class="pl-2.5 pr-1 text-[11px] font-semibold text-slate-500 select-none">R$</span>
+                                            <input type="number" step="0.01" id="global_transporte_dia" name="transporte_dia" wire:key="global-input-transporte-dia" wire:model="transporte_dia"
+                                                class="flex-1 min-w-0 bg-transparent py-1 pr-2.5 text-xs font-bold text-slate-100 text-right focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                @error('alimentacao_dia') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
+                                @error('transporte_dia') <span class="text-rose-400 text-[10px] block mt-0.5">{{ $message }}</span> @enderror
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Dinheiro Mãe Fixo (R$)</label>
-                                <input type="number" step="0.01" wire:model="dinheiro_mae" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Internet Padrão Mensal (R$)</label>
-                                <input type="number" step="0.01" wire:model="internet_padrao" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Gemini AI Padrão Mensal (R$)</label>
-                                <input type="number" step="0.01" wire:model="gemini_padrao" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                            </div>
-                            <div class="flex items-center justify-end space-x-3 pt-2">
+
+                            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-white/[0.07]">
                                 <button type="button" wire:click="$set('showSettingsModal', false)"
-                                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+                                    class="px-4 py-2 bg-white/[0.06] hover:bg-white/[0.10] active:scale-95 text-slate-300 rounded-xl text-xs font-semibold transition">
                                     Cancelar
                                 </button>
                                 <button type="submit"
-                                    class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/30 transition">
+                                    class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition">
                                     Salvar Globais
                                 </button>
                             </div>
@@ -1160,49 +1347,66 @@
             <!-- ========================================== -->
             @if($showCaixinhaModal)
                 <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
-                        <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-100">
-                                    {{ $caixinhaId ? 'Editar Caixinha' : 'Nova Caixinha' }}
-                                </h3>
-                                <p class="text-xs text-slate-400">Defina o nome, objetivo e saldo da sua caixinha</p>
+                    <div class="bg-slate-900 border border-slate-800/90 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/40">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-xl bg-indigo-500/15 border border-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-100">
+                                        {{ $caixinhaId ? 'Editar Caixinha' : 'Nova Caixinha' }}
+                                    </h3>
+                                    <p class="text-xs text-slate-400">Defina o nome, objetivo e saldo da caixinha</p>
+                                </div>
                             </div>
-                            <button type="button" wire:click="$set('showCaixinhaModal', false)" class="text-slate-400 hover:text-slate-200">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <button type="button" wire:click="$set('showCaixinhaModal', false)"
+                                class="text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-lg p-1.5 transition">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <form wire:submit.prevent="saveCaixinha" class="p-6 space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Nome da Caixinha</label>
-                                <input type="text" wire:model="caixinhaName" placeholder="ex: Reserva de Emergência, Viagem"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none" required>
+                        <form wire:submit.prevent="saveCaixinha" class="p-5 space-y-3.5">
+                            <div wire:key="caixinha-field-name" class="space-y-1">
+                                <label for="caixinha_name" class="block text-xs font-semibold text-slate-300">Nome da Caixinha</label>
+                                <input type="text" id="caixinha_name" name="caixinhaName" wire:key="input-caixinha-name" wire:model="caixinhaName" placeholder="ex: Reserva de Emergência, Viagem"
+                                    class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition" required>
                                 @error('caixinhaName') <span class="text-rose-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Meta / Objetivo (R$) <span class="text-slate-500 font-normal">(opcional)</span></label>
-                                <input type="number" step="0.01" wire:model="caixinhaTarget" placeholder="ex: 5000.00"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div wire:key="caixinha-field-target" class="space-y-1">
+                                    <label for="caixinha_target" class="block text-xs font-semibold text-slate-300">Meta <span class="text-slate-500 font-normal">(opcional)</span></label>
+                                    <div class="relative rounded-xl shadow-sm">
+                                        <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                        <input type="number" step="0.01" id="caixinha_target" name="caixinhaTarget" wire:key="input-caixinha-target" wire:model="caixinhaTarget" placeholder="5000.00"
+                                            class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-sm font-semibold text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                    </div>
+                                </div>
+                                <div wire:key="caixinha-field-balance" class="space-y-1">
+                                    <label for="caixinha_balance" class="block text-xs font-semibold text-slate-300">Saldo Atual</label>
+                                    <div class="relative rounded-xl shadow-sm">
+                                        <span class="absolute left-3 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                        <input type="number" step="0.01" id="caixinha_balance" name="caixinhaBalance" wire:key="input-caixinha-balance" wire:model="caixinhaBalance" placeholder="0.00"
+                                            class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-sm font-bold text-indigo-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Saldo Atual (R$)</label>
-                                <input type="number" step="0.01" wire:model="caixinhaBalance"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none" required>
+                            <div wire:key="caixinha-field-desc" class="space-y-1">
+                                <label for="caixinha_description" class="block text-xs font-semibold text-slate-300">Descrição / Anotação <span class="text-slate-500 font-normal">(opcional)</span></label>
+                                <input type="text" id="caixinha_description" name="caixinhaDescription" wire:key="input-caixinha-desc" wire:model="caixinhaDescription" placeholder="ex: Rendimento diário, meta até final do ano"
+                                    class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition">
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Descrição / Anotação</label>
-                                <input type="text" wire:model="caixinhaDescription" placeholder="ex: Rendimento diário, para urgências"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                            </div>
-                            <div class="flex items-center justify-end space-x-3 pt-2">
+                            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-800/60">
                                 <button type="button" wire:click="$set('showCaixinhaModal', false)"
-                                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+                                    class="px-4 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl text-xs font-semibold transition">
                                     Cancelar
                                 </button>
                                 <button type="submit"
-                                    class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/30 transition">
+                                    class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition">
                                     Salvar Caixinha
                                 </button>
                             </div>
@@ -1216,53 +1420,59 @@
             <!-- ========================================== -->
             @if($showDepositModal)
                 <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
-                        <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+                    <div class="bg-slate-900 border border-slate-800/90 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/40">
                             <div>
-                                <h3 class="text-base font-bold text-slate-100">
-                                    {{ $depositActionType === 'deposito' ? 'Guardar Dinheiro na Caixinha' : 'Resgatar Dinheiro da Caixinha' }}
+                                <h3 class="text-sm font-bold text-slate-100">
+                                    {{ $depositActionType === 'deposito' ? 'Guardar Dinheiro' : 'Resgatar Dinheiro' }}
                                 </h3>
                                 <p class="text-xs text-slate-400">Informe o valor da movimentação</p>
                             </div>
-                            <button type="button" wire:click="$set('showDepositModal', false)" class="text-slate-400 hover:text-slate-200">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <button type="button" wire:click="$set('showDepositModal', false)"
+                                class="text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-lg p-1.5 transition">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <form wire:submit.prevent="processDepositAction" class="p-6 space-y-4">
-                            <div class="flex p-1 bg-slate-950 rounded-xl border border-slate-800">
+                        <form wire:submit.prevent="processDepositAction" class="p-5 space-y-3.5">
+                            {{-- Action Switcher --}}
+                            <div class="flex p-1 bg-slate-950 rounded-xl border border-slate-800/80 gap-1">
                                 <button type="button" wire:click="$set('depositActionType', 'deposito')"
-                                    class="flex-1 py-2 text-xs font-semibold rounded-lg transition {{ $depositActionType === 'deposito' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white' }}">
-                                    Guardar (+)
+                                    class="flex-1 py-1.5 text-xs font-semibold rounded-lg transition {{ $depositActionType === 'deposito' ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30' : 'text-slate-400 hover:text-slate-200' }}">
+                                    + Guardar
                                 </button>
                                 <button type="button" wire:click="$set('depositActionType', 'resgate')"
-                                    class="flex-1 py-2 text-xs font-semibold rounded-lg transition {{ $depositActionType === 'resgate' ? 'bg-rose-600 text-white' : 'text-slate-400 hover:text-white' }}">
-                                    Resgatar (-)
+                                    class="flex-1 py-1.5 text-xs font-semibold rounded-lg transition {{ $depositActionType === 'resgate' ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/30' : 'text-slate-400 hover:text-slate-200' }}">
+                                    - Resgatar
                                 </button>
                             </div>
 
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Valor (R$)</label>
-                                <input type="number" step="0.01" wire:model="depositAmount" placeholder="0.00"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-lg font-bold text-slate-100 focus:border-indigo-500 focus:outline-none" required autofocus>
+                            <div wire:key="deposit-field-amount" class="space-y-1">
+                                <label for="deposit_amount" class="block text-xs font-semibold text-slate-300">Valor da Operação</label>
+                                <div class="relative rounded-xl shadow-sm">
+                                    <span class="absolute left-3.5 top-2.5 text-sm font-semibold text-slate-500 pointer-events-none">R$</span>
+                                    <input type="number" step="0.01" id="deposit_amount" name="depositAmount" wire:key="input-deposit-amount" wire:model="depositAmount" placeholder="0.00"
+                                        class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-9 pr-3.5 py-2.5 text-base font-bold text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" required autofocus>
+                                </div>
                                 @error('depositAmount') <span class="text-rose-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
-                            <div class="grid grid-cols-4 gap-2 pt-1">
-                                <button type="button" wire:click="$set('depositAmount', 20)" class="py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300">R$ 20</button>
-                                <button type="button" wire:click="$set('depositAmount', 50)" class="py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300">R$ 50</button>
-                                <button type="button" wire:click="$set('depositAmount', 100)" class="py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300">R$ 100</button>
-                                <button type="button" wire:click="$set('depositAmount', 200)" class="py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300">R$ 200</button>
+                            <div class="grid grid-cols-4 gap-1.5 pt-0.5">
+                                <button type="button" wire:click="$set('depositAmount', 20)" class="py-1.5 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300 transition active:scale-95">+ R$ 20</button>
+                                <button type="button" wire:click="$set('depositAmount', 50)" class="py-1.5 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300 transition active:scale-95">+ R$ 50</button>
+                                <button type="button" wire:click="$set('depositAmount', 100)" class="py-1.5 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300 transition active:scale-95">+ R$ 100</button>
+                                <button type="button" wire:click="$set('depositAmount', 200)" class="py-1.5 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300 transition active:scale-95">+ R$ 200</button>
                             </div>
 
-                            <div class="flex items-center justify-end space-x-3 pt-3">
+                            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-800/60">
                                 <button type="button" wire:click="$set('showDepositModal', false)"
-                                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+                                    class="px-4 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl text-xs font-semibold transition">
                                     Cancelar
                                 </button>
                                 <button type="submit"
-                                    class="px-5 py-2 {{ $depositActionType === 'deposito' ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-rose-600 hover:bg-rose-700' }} text-white rounded-xl text-xs font-semibold shadow-lg transition">
+                                    class="px-5 py-2 {{ $depositActionType === 'deposito' ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-600/25' : 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/25' }} text-white rounded-xl text-xs font-semibold shadow-lg transition active:scale-95">
                                     Confirmar
                                 </button>
                             </div>
@@ -1276,61 +1486,76 @@
             <!-- ========================================== -->
             @if($showInvestmentModal)
                 <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
-                        <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-100">
-                                    {{ $investmentId ? 'Editar Investimento' : 'Novo Investimento' }}
-                                </h3>
-                                <p class="text-xs text-slate-400">Cadastre ou atualize a posição do seu ativo</p>
+                    <div class="bg-slate-900 border border-slate-800/90 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/40">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-xl bg-violet-500/15 border border-violet-500/20 text-violet-400 flex items-center justify-center shrink-0">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-100">
+                                        {{ $investmentId ? 'Editar Investimento' : 'Novo Investimento' }}
+                                    </h3>
+                                    <p class="text-xs text-slate-400">Cadastre ou atualize a posição do ativo</p>
+                                </div>
                             </div>
-                            <button type="button" wire:click="$set('showInvestmentModal', false)" class="text-slate-400 hover:text-slate-200">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <button type="button" wire:click="$set('showInvestmentModal', false)"
+                                class="text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 rounded-lg p-1.5 transition">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <form wire:submit.prevent="saveInvestment" class="p-6 space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Nome do Ativo / Aplicação</label>
-                                <input type="text" wire:model="investmentName" placeholder="ex: CDB 100% CDI, Tesouro Selic, Bitcoin"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none" required>
+                        <form wire:submit.prevent="saveInvestment" class="p-5 space-y-3.5">
+                            <div wire:key="inv-field-name" class="space-y-1">
+                                <label for="investment_name" class="block text-xs font-semibold text-slate-300">Nome do Ativo / Aplicação</label>
+                                <input type="text" id="investment_name" name="investmentName" wire:key="input-investment-name" wire:model="investmentName" placeholder="ex: CDB 100% CDI, Tesouro Selic, Bitcoin"
+                                    class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition" required>
                                 @error('investmentName') <span class="text-rose-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Categoria</label>
-                                <select wire:model="investmentCategory" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                                    <option value="Renda Fixa">Renda Fixa (CDB / LCI / LCA)</option>
-                                    <option value="Tesouro Direto">Tesouro Direto</option>
-                                    <option value="Ações">Ações</option>
-                                    <option value="Fundos Imobiliários">Fundos Imobiliários (FIIs)</option>
-                                    <option value="Criptomoedas">Criptomoedas</option>
-                                    <option value="Fundos de Investimento">Fundos de Investimento</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div wire:key="inv-field-cat" class="space-y-1">
+                                    <label for="investment_cat" class="block text-xs font-semibold text-slate-300">Categoria</label>
+                                    <select id="investment_cat" name="investmentCategory" wire:key="input-investment-category" wire:model="investmentCategory"
+                                        class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition">
+                                        <option value="Renda Fixa">Renda Fixa (CDB/LCI)</option>
+                                        <option value="Tesouro Direto">Tesouro Direto</option>
+                                        <option value="Ações">Ações</option>
+                                        <option value="Fundos Imobiliários">FIIs</option>
+                                        <option value="Criptomoedas">Cripto</option>
+                                        <option value="Fundos de Investimento">Fundos</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
+                                </div>
+                                <div wire:key="inv-field-inst" class="space-y-1">
+                                    <label for="investment_inst" class="block text-xs font-semibold text-slate-300">Instituição</label>
+                                    <input type="text" id="investment_inst" name="investmentInstitution" wire:key="input-investment-institution" wire:model="investmentInstitution" placeholder="ex: Nubank, XP"
+                                        class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition">
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Instituição / Corretora <span class="text-slate-500 font-normal">(opcional)</span></label>
-                                <input type="text" wire:model="investmentInstitution" placeholder="ex: Nubank, Banco Inter, XP, Binance"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
+                            <div wire:key="inv-field-amount" class="space-y-1">
+                                <label for="investment_amount" class="block text-xs font-semibold text-slate-300">Valor Investido</label>
+                                <div class="relative rounded-xl shadow-sm">
+                                    <span class="absolute left-3.5 top-2 text-xs font-semibold text-slate-500 pointer-events-none">R$</span>
+                                    <input type="number" step="0.01" id="investment_amount" name="investmentAmount" wire:key="input-investment-amount" wire:model="investmentAmount" placeholder="0.00"
+                                        class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-9 pr-3.5 py-2 text-sm font-bold text-violet-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" required>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Valor Atual / Investido (R$)</label>
-                                <input type="number" step="0.01" wire:model="investmentAmount"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none" required>
+                            <div wire:key="inv-field-notes" class="space-y-1">
+                                <label for="investment_notes" class="block text-xs font-semibold text-slate-300">Notas / Detalhes <span class="text-slate-500 font-normal">(opcional)</span></label>
+                                <input type="text" id="investment_notes" name="investmentNotes" wire:key="input-investment-notes" wire:model="investmentNotes" placeholder="ex: Vencimento 2027, Liquidez diária"
+                                    class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 focus:outline-none transition">
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Notas / Detalhes <span class="text-slate-500 font-normal">(opcional)</span></label>
-                                <input type="text" wire:model="investmentNotes" placeholder="ex: Vencimento 2027, Liquidez diária"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none">
-                            </div>
-                            <div class="flex items-center justify-end space-x-3 pt-2">
+                            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-800/60">
                                 <button type="button" wire:click="$set('showInvestmentModal', false)"
-                                    class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+                                    class="px-4 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl text-xs font-semibold transition">
                                     Cancelar
                                 </button>
                                 <button type="submit"
-                                    class="px-5 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold shadow-lg shadow-violet-600/30 transition">
+                                    class="px-5 py-2 bg-violet-600 hover:bg-violet-500 active:scale-95 text-white rounded-xl text-xs font-semibold shadow-lg shadow-violet-600/25 transition">
                                     Salvar Investimento
                                 </button>
                             </div>

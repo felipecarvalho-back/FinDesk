@@ -8,7 +8,9 @@ use App\Models\MonthlyFinance;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Native\Desktop\Facades\Window;
 use Native\Laravel\Facades\Notification;
 
 class FinanceDashboard extends Component
@@ -266,8 +268,43 @@ class FinanceDashboard extends Component
         $this->showSettingsModal = false;
     }
 
+    #[On('settings-updated')]
+    public function refreshGlobalSettings(): void
+    {
+        $this->bolsa_auxilio = (float) Setting::getValue('bolsa_auxilio', 1000.00);
+        $this->alimentacao_dia = (float) Setting::getValue('alimentacao_dia', 20.00);
+        $this->transporte_dia = (float) Setting::getValue('transporte_dia', 15.00);
+        $this->dinheiro_mae = (float) Setting::getValue('dinheiro_mae', 100.00);
+        $this->internet_padrao = (float) Setting::getValue('internet_padrao', 100.00);
+        $this->gemini_padrao = (float) Setting::getValue('gemini_padrao', 100.00);
+
+        $this->loadFinances();
+    }
+
     public function openSettingsModal(): void
     {
+        if (class_exists(Window::class)) {
+            try {
+                Window::open('settings')
+                    ->route('settings')
+                    ->width(480)
+                    ->height(540)
+                    ->minWidth(450)
+                    ->minHeight(500)
+                    ->maxWidth(550)
+                    ->maxHeight(600)
+                    ->resizable(false)
+                    ->title('Valores Globais Padrão')
+                    ->alwaysOnTop()
+                    ->showDevTools(false)
+                    ->hideMenu();
+
+                return;
+            } catch (\Throwable $e) {
+                // Fallback para modal in-app no navegador
+            }
+        }
+
         $this->showSettingsModal = true;
     }
 
@@ -344,8 +381,12 @@ class FinanceDashboard extends Component
         $this->caxinha = $finance->caxinha;
         $this->investimento = $finance->investimento;
         $this->fatura = $finance->fatura;
-        $this->internet = (float) $finance->internet;
-        $this->gemini = (float) $finance->gemini;
+        $this->internet = (float) $finance->internet > 0
+            ? (float) $finance->internet
+            : $this->internet_padrao;
+        $this->gemini = (float) $finance->gemini > 0
+            ? (float) $finance->gemini
+            : $this->gemini_padrao;
         $this->extra_nome = $finance->extra_nome ?? 'Extra';
         $this->extra_valor = (float) $finance->extra_valor;
         $this->extra_tipo = $finance->extra_tipo ?? 'saida';
@@ -360,9 +401,7 @@ class FinanceDashboard extends Component
         $this->ignorar_internet = (bool) $finance->ignorar_internet;
         $this->ignorar_gemini = (bool) $finance->ignorar_gemini;
 
-        $this->previewSalarioTeorico = $finance->salario_teorico;
-        $this->previewMae = $finance->total_mae;
-        $this->previewSaldoFinal = $finance->saldo_final;
+        $this->recalculatePreviews();
 
         $this->showFormModal = true;
     }

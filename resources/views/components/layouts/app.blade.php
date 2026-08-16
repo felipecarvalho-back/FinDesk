@@ -29,7 +29,6 @@
     </script>
 
     @livewireStyles
-    @fluxAppearance
 </head>
 <body class="h-full font-sans antialiased overflow-hidden selection:bg-indigo-500 selection:text-white">
     <div class="flex h-full w-full overflow-hidden bg-slate-950">
@@ -39,6 +38,5 @@
         </main>
     </div>
     @livewireScripts
-    @fluxScripts
 </body>
 </html>
