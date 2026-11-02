@@ -19,6 +19,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->minWidth(1000)
             ->minHeight(700)
             ->title('FinDesk - Gerenciador Financeiro')
+            ->backgroundColor('#020617')
             ->showDevTools((bool) config('app.debug', false))
             ->hideMenu()
             ->maximized();
