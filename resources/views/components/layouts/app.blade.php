@@ -10,12 +10,13 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     
     <!-- ApexCharts CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
 
     <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Disable F12 Developer Tools -->
+    @production
+    <!-- Disable F12 Developer Tools in Production -->
     <script>
         window.addEventListener('keydown', (e) => {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'C' || e.key === 'c' || e.key === 'J' || e.key === 'j')) || (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
@@ -27,6 +28,7 @@
             e.preventDefault();
         });
     </script>
+    @endproduction
 
     @livewireStyles
 </head>

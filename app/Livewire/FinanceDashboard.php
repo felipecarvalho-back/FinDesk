@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Native\Laravel\Facades\Notification;
+use Native\Desktop\Facades\Notification;
 
 /**
  * @property-read Collection<int, MonthlyFinance> $finances
