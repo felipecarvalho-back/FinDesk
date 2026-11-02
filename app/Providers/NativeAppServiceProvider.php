@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Artisan;
 use Native\Desktop\Contracts\ProvidesPhpIni;
 use Native\Desktop\Facades\Window;
 
@@ -14,8 +13,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        Artisan::call('migrate', ['--force' => true]);
-
         Window::open()
             ->width(1280)
             ->height(850)
@@ -24,7 +21,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->title('FinDesk - Gerenciador Financeiro')
             ->showDevTools((bool) config('app.debug', false))
             ->hideMenu()
-            ->rememberState()
             ->maximized();
     }
 
