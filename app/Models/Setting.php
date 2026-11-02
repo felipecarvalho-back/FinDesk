@@ -14,6 +14,7 @@ class Setting extends Model
         if ($setting) {
             return $setting->value;
         }
+
         return $default;
     }
 

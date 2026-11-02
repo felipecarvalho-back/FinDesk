@@ -24,6 +24,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->title('FinDesk - Gerenciador Financeiro')
             ->showDevTools(false)
             ->hideMenu()
+            ->rememberState()
+            ->backgroundColor('#09090b')
             ->maximized();
     }
 
@@ -33,6 +35,18 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function phpIni(): array
     {
         return [
+            'opcache.enable' => 1,
+            'opcache.enable_cli' => 1,
+            'opcache.memory_consumption' => 128,
+            'opcache.interned_strings_buffer' => 16,
+            'opcache.max_accelerated_files' => 10000,
+            'opcache.validate_timestamps' => config('app.debug') ? 1 : 0,
+            'opcache.revalidate_freq' => 0,
+            'opcache.jit' => 'tracing',
+            'opcache.jit_buffer_size' => '64M',
+            'realpath_cache_size' => '4096k',
+            'realpath_cache_ttl' => 600,
+            'memory_limit' => '256M',
         ];
     }
 }

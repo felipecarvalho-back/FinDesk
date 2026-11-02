@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('caxinha', 10, 2)->default(300.00);
             $table->decimal('investimento', 10, 2)->default(200.00);
             $table->decimal('fatura', 10, 2)->default(300.00);
-            
+
             // Snapshots of global settings
             $table->decimal('bolsa_auxilio_snapshot', 10, 2);
             $table->decimal('alimentacao_dia_snapshot', 10, 2);

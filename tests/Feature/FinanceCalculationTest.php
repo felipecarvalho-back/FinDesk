@@ -187,3 +187,30 @@ test('privacy mode toggles state', function () {
         ->call('togglePrivacy')
         ->assertSet('hideValues', false);
 });
+
+test('computed collections load and render without serializing heavy public arrays', function () {
+    Caixinha::create([
+        'name' => 'Viagem',
+        'target_amount' => 2000.00,
+        'balance' => 500.00,
+        'color' => 'blue',
+    ]);
+
+    Investment::create([
+        'name' => 'Tesouro Selic 2029',
+        'category' => 'Renda Fixa',
+        'institution' => 'Tesouro Direto',
+        'amount' => 1500.00,
+    ]);
+
+    $component = Livewire::test(FinanceDashboard::class)
+        ->set('isAuthenticated', true)
+        ->assertViewHas('finances')
+        ->assertViewHas('caixinhas')
+        ->assertViewHas('investments');
+
+    expect($component->instance()->caixinhas->count())->toBe(1);
+    expect($component->instance()->investments->count())->toBe(1);
+    expect($component->instance()->getTotalCaixinhasBalance())->toBe(500.00);
+    expect($component->instance()->getTotalInvestmentsAmount())->toBe(1500.00);
+});

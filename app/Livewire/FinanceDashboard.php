@@ -7,12 +7,19 @@ use App\Models\Investment;
 use App\Models\MonthlyFinance;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Native\Desktop\Facades\Window;
 use Native\Laravel\Facades\Notification;
 
+/**
+ * @property-read Collection<int, MonthlyFinance> $finances
+ * @property-read Collection<int, Caixinha> $caixinhas
+ * @property-read Collection<int, Investment> $investments
+ */
 class FinanceDashboard extends Component
 {
     // Authentication state
@@ -25,15 +32,6 @@ class FinanceDashboard extends Component
 
     // Active Screen: 'dashboard', 'meses', 'detalhes', 'caixinhas', 'investimentos'
     public string $currentScreen = 'dashboard';
-
-    // List of monthly records
-    public array $finances = [];
-
-    // List of Caixinhas
-    public array $caixinhas = [];
-
-    // List of Investments
-    public array $investments = [];
 
     // Global settings state
     public float $bolsa_auxilio = 1000.00;
@@ -186,9 +184,6 @@ class FinanceDashboard extends Component
         $this->hideValues = (bool) session()->get('hide_values', false);
 
         $this->loadSettings();
-        $this->loadFinances();
-        $this->loadCaixinhas();
-        $this->loadInvestments();
 
         // Defaults for form
         $this->year = (int) date('Y');
@@ -226,22 +221,48 @@ class FinanceDashboard extends Component
         $this->gemini_padrao = (float) Setting::getValue('gemini_padrao', 100.00);
     }
 
+    /**
+     * @return Collection<int, MonthlyFinance>
+     */
+    #[Computed]
+    public function finances()
+    {
+        return MonthlyFinance::orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get();
+    }
+
+    /**
+     * @return Collection<int, Caixinha>
+     */
+    #[Computed]
+    public function caixinhas()
+    {
+        return Caixinha::orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * @return Collection<int, Investment>
+     */
+    #[Computed]
+    public function investments()
+    {
+        return Investment::orderBy('amount', 'desc')->get();
+    }
+
     public function loadFinances(): void
     {
-        $this->finances = MonthlyFinance::orderBy('year', 'asc')
-            ->orderBy('month', 'asc')
-            ->get()
-            ->all();
+        unset($this->finances);
     }
 
     public function loadCaixinhas(): void
     {
-        $this->caixinhas = Caixinha::orderBy('created_at', 'desc')->get()->all();
+        unset($this->caixinhas);
     }
 
     public function loadInvestments(): void
     {
-        $this->investments = Investment::orderBy('amount', 'desc')->get()->all();
+        unset($this->investments);
     }
 
     public function saveSettings(): void
@@ -926,7 +947,10 @@ class FinanceDashboard extends Component
 
     public function render(): View
     {
-        return view('livewire.finance-dashboard')
-            ->layout('components.layouts.app');
+        return view('livewire.finance-dashboard', [
+            'finances' => $this->finances,
+            'caixinhas' => $this->caixinhas,
+            'investments' => $this->investments,
+        ])->layout('components.layouts.app');
     }
 }
